@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_color">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:paddingBottom="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@mipmap/cheers"
+        android:alpha="0.4"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Are you going to\ndrink tonight?"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/drink_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView5"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="94dp"
+        android:text="Yes"
+        android:background="@drawable/rounded_button_white_border"
+        android:textColor="@android:color/white"
+        android:onClick="will_drink"/>
+
+    <Button
+        android:id="@+id/drink_maybe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/drink_yes"
+        android:layout_centerHorizontal="true"
+        android:text="Maybe"
+        android:background="@drawable/rounded_button_white_border"
+        android:textColor="@android:color/white"
+        android:onClick="maybe_will_drink"/>
+
+    <Button
+        android:id="@+id/drink_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/drink_maybe"
+        android:layout_marginStart="25dp"
+        android:layout_toEndOf="@+id/drink_maybe"
+        android:text="No"
+        android:background="@drawable/rounded_button_white_border"
+        android:textColor="@android:color/white"
+        android:onClick="will_not_drink"/>
+
+</RelativeLayout>

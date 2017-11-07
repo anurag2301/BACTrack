@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item
+        android:id="@+id/view_contacts"
+        android:title="View Contacts" />
+    <item
+        android:id="@+id/help"
+        android:title="Help" />
+    <item
+        android:id="@+id/add_contact"
+        android:title="Add Contact" />
+    <item
+        android:id="@+id/back_to_main"
+        android:title="Return to Main" />
+</menu>
