@@ -33,6 +33,8 @@
         </activity>
         <activity android:name=".GetStartedActivity" />
         <activity android:name=".WillYouDrink" />
+        <activity android:name=".HowGoingHome" />
+        <activity android:name=".BlowActivity" />
     </application>
 
 </manifest>

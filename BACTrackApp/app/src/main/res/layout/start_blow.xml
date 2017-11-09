@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_color">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/circular_button"
+        android:onClick="blow_clicked"
+        android:text="Start"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@dimen/small_background_img_size"
+        android:layout_height="@dimen/small_background_img_size"
+        android:layout_above="@+id/button"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="42dp"
+        android:alpha="0.14"
+        app:srcCompat="@mipmap/smashicon_pint" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="@dimen/small_background_img_size"
+        android:layout_height="@dimen/small_background_img_size"
+        android:layout_alignStart="@+id/imageView6"
+        android:layout_below="@+id/button"
+        android:alpha="0.14"
+        app:srcCompat="@mipmap/smashicon_pint" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="@dimen/small_background_img_size"
+        android:layout_height="@dimen/small_background_img_size"
+        android:layout_above="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="42dp"
+        android:alpha="0.14"
+        app:srcCompat="@mipmap/smashicon_glass" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="@dimen/small_background_img_size"
+        android:layout_height="@dimen/small_background_img_size"
+        android:layout_alignStart="@+id/imageView7"
+        android:layout_below="@+id/button"
+        android:alpha="0.14"
+        app:srcCompat="@mipmap/smashicon_glass" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="@dimen/small_background_img_size"
+        android:layout_height="@dimen/small_background_img_size"
+        android:layout_alignStart="@+id/imageView2"
+        android:layout_alignTop="@+id/imageView7"
+        android:alpha="0.14"
+        app:srcCompat="@mipmap/cheers" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="@dimen/small_background_img_size"
+        android:layout_height="@dimen/small_background_img_size"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_centerVertical="true"
+        android:alpha="0.14"
+        app:srcCompat="@mipmap/holiday" />
+</RelativeLayout>
