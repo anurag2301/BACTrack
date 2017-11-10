@@ -1,149 +1,137 @@
-public class MainActivity extends BaseActivity {
-    private static final byte PERMISSIONS_FOR_SCAN = 100;
-    private static String TAG = "MainActivity";
+package com.pervasive_computing.bactrackapp;
 
-    private TextView statusMessageTextView;
-    private TextView batteryLevelTextView;
+import android.bluetooth.BluetoothDevice;
 
-    private BACtrackAPI mAPI;
-    private String currentFirmware;
-    private Button serialNumberButton;
-    private Button useCountButton;
-    private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
+import BACtrackAPI.API.BACtrackAPICallbacks;
+import BACtrackAPI.Constants.BACTrackDeviceType;
 
-        @Override
-        public void BACtrackAPIKeyDeclined(String errorMessage) {
-            APIKeyVerificationAlert verify = new APIKeyVerificationAlert();
-            verify.execute(errorMessage);
-        }
+/*
+  Created by Pratik on 11/09/2017.
+ */
 
-        @Override
-        public void BACtrackAPIKeyAuthorized() {
-
-        }
-
-        @Override
-        public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
-            setStatus(R.string.TEXT_CONNECTED);
-        }
-
-        @Override
-        public void BACtrackDidConnect(String s) {
-            setStatus(R.string.TEXT_DISCOVERING_SERVICES);
-        }
-
-        @Override
-        public void BACtrackDisconnected() {
-            setStatus(R.string.TEXT_DISCONNECTED);
-            setBatteryStatus("");
-            setCurrentFirmware(null);
-        }
-
-        @Override
-        public void BACtrackConnectionTimeout() {
-
-        }
-
-        @Override
-        public void BACtrackFoundBreathalyzer(BluetoothDevice bluetoothDevice) {
-            Log.d(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
-        }
-
-        @Override
-        public void BACtrackCountdown(int currentCountdownCount) {
-            setStatus(getString(R.string.TEXT_COUNTDOWN) + " " + currentCountdownCount);
-        }
-
-        @Override
-        public void BACtrackStart() {
-            setStatus(R.string.TEXT_BLOW_NOW);
-        }
-
-        @Override
-        public void BACtrackBlow() {
-            setStatus(R.string.TEXT_KEEP_BLOWING);
-        }
-
-        @Override
-        public void BACtrackAnalyzing() {
-            setStatus(R.string.TEXT_ANALYZING);
-        }
-
-        @Override
-        public void BACtrackResults(float measuredBac) {
-            setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
-        }
-
-        @Override
-        public void BACtrackFirmwareVersion(String version) {
-            setStatus(getString(R.string.TEXT_FIRMWARE_VERSION) + " " + version);
-            setCurrentFirmware(version);
-        }
-
-        @Override
-        public void BACtrackSerial(String serialHex) {
-            setStatus(getString(R.string.TEXT_SERIAL_NUMBER) + " " + serialHex);
-        }
-
-        @Override
-        public void BACtrackUseCount(int useCount) {
-            Log.d(TAG, "UseCount: " + useCount);
-            setStatus(getString(R.string.TEXT_USE_COUNT) + " " + useCount);
-        }
-
-        @Override
-        public void BACtrackBatteryVoltage(float voltage) {
-
-        }
-
-        @Override
-        public void BACtrackBatteryLevel(int level) {
-            setBatteryStatus(getString(R.string.TEXT_BATTERY_LEVEL) + " " + level);
-
-        }
-
-        @Override
-        public void BACtrackError(int errorCode) {
-            if (errorCode == Errors.ERROR_BLOW_ERROR)
-                setStatus(R.string.TEXT_ERR_BLOW_ERROR);
-        }
-    };
-    private Context mContext;
+public class BAC_Callbacks implements BACtrackAPICallbacks {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        this.statusMessageTextView = this.findViewById(R.id.status_message_text_view_id);
-        this.batteryLevelTextView = this.findViewById(R.id.battery_level_text_view_id);
-
-        this.setStatus(R.string.TEXT_DISCONNECTED);
-
-        this.serialNumberButton = findViewById(R.id.get_serial_number_button_id);
-        this.useCountButton = findViewById(R.id.get_use_count_button_id);
-
-        String apiKey = null;
-        try {
-            apiKey = Util.getProperty("BACTRACK_API_KEY", getApplicationContext());
-        } catch (IOException e) {
-            Log.e(TAG, "API Key not found");
-        }
-        try {
-            mAPI = new BACtrackAPI(this, mCallbacks, apiKey);
-            mContext = this;
-        } catch (BluetoothLENotSupportedException e) {
-            e.printStackTrace();
-            this.setStatus(R.string.TEXT_ERR_BLE_NOT_SUPPORTED);
-        } catch (BluetoothNotEnabledException e) {
-            e.printStackTrace();
-            this.setStatus(R.string.TEXT_ERR_BT_NOT_ENABLED);
-        } catch (LocationServicesNotEnabledException e) {
-            e.printStackTrace();
-            this.setStatus(R.string.TEXT_ERR_LOCATIONS_NOT_ENABLED);
-        }
+    public void BACtrackAPIKeyDeclined(String errorMessage) {
+        //APIKeyVerificationAlert verify = new APIKeyVerificationAlert();
+        //verify.execute(errorMessage);
     }
 
+    @Override
+    public void BACtrackAPIKeyAuthorized() {
+
+    }
+
+    @Override
+    public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
+        //setStatus(R.string.TEXT_CONNECTED);
+    }
+
+    @Override
+    public void BACtrackDidConnect(String s) {
+        //setStatus(R.string.TEXT_DISCOVERING_SERVICES);
+    }
+
+    @Override
+    public void BACtrackDisconnected() {
+        //setStatus(R.string.TEXT_DISCONNECTED);
+        //setBatteryStatus("");
+        //setCurrentFirmware(null);
+    }
+
+    @Override
+    public void BACtrackConnectionTimeout() {
+
+    }
+
+    @Override
+    public void BACtrackFoundBreathalyzer(BluetoothDevice bluetoothDevice) {
+        //Log.d(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
+    }
+
+    @Override
+    public void BACtrackCountdown(int currentCountdownCount) {
+        //setStatus(getString(R.string.TEXT_COUNTDOWN) + " " + currentCountdownCount);
+    }
+
+    @Override
+    public void BACtrackStart() {
+        //setStatus(R.string.TEXT_BLOW_NOW);
+    }
+
+    @Override
+    public void BACtrackBlow() {
+        //setStatus(R.string.TEXT_KEEP_BLOWING);
+    }
+
+    @Override
+    public void BACtrackAnalyzing() {
+        //setStatus(R.string.TEXT_ANALYZING);
+    }
+
+    @Override
+    public void BACtrackResults(float measuredBac) {
+        //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
+    }
+
+    @Override
+    public void BACtrackFirmwareVersion(String version) {
+        //setStatus(getString(R.string.TEXT_FIRMWARE_VERSION) + " " + version);
+        //setCurrentFirmware(version);
+    }
+
+    @Override
+    public void BACtrackSerial(String serialHex) {
+        //setStatus(getString(R.string.TEXT_SERIAL_NUMBER) + " " + serialHex);
+    }
+
+    @Override
+    public void BACtrackUseCount(int useCount) {
+        //Log.d(TAG, "UseCount: " + useCount);
+        //setStatus(getString(R.string.TEXT_USE_COUNT) + " " + useCount);
+    }
+
+    @Override
+    public void BACtrackBatteryVoltage(float voltage) {
+
+    }
+
+    @Override
+    public void BACtrackBatteryLevel(int level) {
+        //setBatteryStatus(getString(R.string.TEXT_BATTERY_LEVEL) + " " + level);
+
+    }
+
+    @Override
+    public void BACtrackError(int errorCode) {
+        //if (errorCode == Errors.ERROR_BLOW_ERROR)
+        //    setStatus(R.string.TEXT_ERR_BLOW_ERROR);
+    }
+    /*private class APIKeyVerificationAlert extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return urls[0];
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            AlertDialog.Builder apiApprovalAlert = new AlertDialog.Builder(mContext);
+            apiApprovalAlert.setTitle("API Approval Failed");
+            apiApprovalAlert.setMessage(result);
+            apiApprovalAlert.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            mAPI.disconnect();
+                            setStatus(R.string.TEXT_DISCONNECTED);
+                            dialog.cancel();
+                        }
+                    });
+
+            apiApprovalAlert.create();
+            apiApprovalAlert.show();
+        }
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
@@ -152,9 +140,9 @@ public class MainActivity extends BaseActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    /*
-                      Only start scan if permissions granted.
-                     */
+
+                      //Only start scan if permissions granted.
+
                     mAPI.connectToNearestBreathalyzer();
                 }
             }
@@ -171,9 +159,8 @@ public class MainActivity extends BaseActivity {
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_FOR_SCAN);
             } else {
-                /*
-                  Permission already granted, start scan.
-                 */
+
+                  //Permission already granted, start scan.
                 mAPI.connectToNearestBreathalyzer();
             }
         }
@@ -324,31 +311,5 @@ public class MainActivity extends BaseActivity {
                     "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private class APIKeyVerificationAlert extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            return urls[0];
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            AlertDialog.Builder apiApprovalAlert = new AlertDialog.Builder(mContext);
-            apiApprovalAlert.setTitle("API Approval Failed");
-            apiApprovalAlert.setMessage(result);
-            apiApprovalAlert.setPositiveButton(
-                    "Ok",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            mAPI.disconnect();
-                            setStatus(R.string.TEXT_DISCONNECTED);
-                            dialog.cancel();
-                        }
-                    });
-
-            apiApprovalAlert.create();
-            apiApprovalAlert.show();
-        }
-    }
-
+*/
 }

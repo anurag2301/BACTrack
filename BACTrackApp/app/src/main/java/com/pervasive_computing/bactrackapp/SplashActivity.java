@@ -18,12 +18,13 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash);
         SharedPreferences sharedPreferences = getSharedPreferences(MY_PREF, Context.MODE_PRIVATE);
         boolean firstRun = sharedPreferences.getBoolean(FIRST_RUN, true);
         if (firstRun) {
-            setContentView(R.layout.splash);
+
         } else {
-            Intent i = new Intent(SplashActivity.this, MainActivity.class);
+            Intent i = new Intent(SplashActivity.this, FirstPageActivity.class);
             startActivity(i);
             finish();
         }
@@ -40,7 +41,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void skip_for_later(View view) {
-        Intent i = new Intent(SplashActivity.this, MainActivity.class);
+        Intent i = new Intent(SplashActivity.this, FirstPageActivity.class);
         startActivity(i);
         finish();
     }

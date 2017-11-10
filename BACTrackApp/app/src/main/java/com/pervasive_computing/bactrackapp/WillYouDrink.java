@@ -1,5 +1,6 @@
 package com.pervasive_computing.bactrackapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,11 +16,17 @@ public class WillYouDrink extends BaseActivity {
     }
 
     public void will_drink(View view) {
+        startActivity(new Intent(getApplicationContext(), HowGoingHome.class));
+        finish();
     }
 
     public void maybe_will_drink(View view) {
+        startActivity(new Intent(getApplicationContext(), HowGoingHome.class));
+        finish();
     }
 
     public void will_not_drink(View view) {
+        startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+        finish();
     }
 }

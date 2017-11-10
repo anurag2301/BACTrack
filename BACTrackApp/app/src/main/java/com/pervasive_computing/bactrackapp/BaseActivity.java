@@ -1,12 +1,10 @@
 package com.pervasive_computing.bactrackapp;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,14 +15,14 @@ import android.view.MenuItem;
 
 public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-/*
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-*/
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -44,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -76,7 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity
                 startActivity(new Intent(this, ContactPicker.class));
                 return true;
             case R.id.back_to_main:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, FirstPageActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -97,7 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity
                 startActivity(new Intent(this, ContactPicker.class));
                 return true;
             case R.id.back_to_main:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, FirstPageActivity.class));
                 return true;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
