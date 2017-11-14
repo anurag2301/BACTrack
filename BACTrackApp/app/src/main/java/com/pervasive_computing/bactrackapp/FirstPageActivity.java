@@ -17,7 +17,7 @@ public class FirstPageActivity extends BaseActivity {
     }
 
     public void checkBAC(View view) {
-        startActivity(new Intent(getApplicationContext(), BlowActivity.class));
+        startActivity(new Intent(getApplicationContext(), InitiateActivity.class));
         finish();
     }
 }

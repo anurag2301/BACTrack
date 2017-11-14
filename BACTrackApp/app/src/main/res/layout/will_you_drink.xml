@@ -11,6 +11,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:alpha="0.4"
+        android:contentDescription="@string/BACKGROUND_IMAGE"
         android:paddingBottom="150dp"
         android:paddingLeft="100dp"
         android:paddingRight="100dp"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Are you going to\ndrink tonight?"
+        android:text="@string/WILL_YOU_DRINK"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="30sp" />
@@ -37,7 +38,7 @@
         android:layout_marginTop="94dp"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="will_drink"
-        android:text="Yes"
+        android:text="@string/YES"
         android:textColor="@android:color/white" />
 
     <Button
@@ -48,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="maybe_will_drink"
-        android:text="Maybe"
+        android:text="@string/MAYBE"
         android:textColor="@android:color/white" />
 
     <Button
@@ -60,7 +61,7 @@
         android:layout_toEndOf="@+id/button_walk"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="will_not_drink"
-        android:text="No"
+        android:text="@string/NO"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

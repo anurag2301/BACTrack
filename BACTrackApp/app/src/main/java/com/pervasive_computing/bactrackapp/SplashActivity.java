@@ -21,9 +21,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.splash);
         SharedPreferences sharedPreferences = getSharedPreferences(MY_PREF, Context.MODE_PRIVATE);
         boolean firstRun = sharedPreferences.getBoolean(FIRST_RUN, true);
-        if (firstRun) {
-
-        } else {
+        if (!firstRun) {
             Intent i = new Intent(SplashActivity.this, FirstPageActivity.class);
             startActivity(i);
             finish();

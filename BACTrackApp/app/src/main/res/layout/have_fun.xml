@@ -11,6 +11,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:alpha="1"
+        android:contentDescription="@string/BACKGROUND_IMAGE"
         android:paddingBottom="200dp"
         android:paddingLeft="100dp"
         android:paddingRight="100dp"
@@ -23,7 +24,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="126dp"
-        android:text="Have a fun night and\ncheck back soon!"
+        android:text="@string/HAVE_FUN"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="30sp" />

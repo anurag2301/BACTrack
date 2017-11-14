@@ -11,6 +11,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:alpha="0.4"
+        android:contentDescription="@string/BACKGROUND_IMAGE"
         android:paddingBottom="150dp"
         android:paddingLeft="100dp"
         android:paddingRight="100dp"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="How are you\ngetting home?"
+        android:text="@string/HOW_GOING_HOME"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="30sp" />
@@ -37,7 +38,7 @@
         android:layout_toStartOf="@+id/button_walk"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="car_clicked"
-        android:text="Car"
+        android:text="@string/CAR"
         android:textColor="@android:color/white" />
 
     <Button
@@ -48,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="walk_clicked"
-        android:text="Walk"
+        android:text="@string/WALK"
         android:textColor="@android:color/white" />
 
     <Button
@@ -60,7 +61,7 @@
         android:layout_toEndOf="@+id/button_walk"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="friends_clicked"
-        android:text="Friends"
+        android:text="@string/FRIENDS"
         android:textColor="@android:color/white" />
 
     <Button
@@ -72,7 +73,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="bus_clicked"
-        android:text="Bus"
+        android:text="@string/BUS"
         android:textColor="@android:color/white" />
 
     <Button
@@ -83,7 +84,7 @@
         android:layout_alignTop="@+id/button_bus"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="taxi_clicked"
-        android:text="Taxi"
+        android:text="@string/TAXI"
         android:textColor="@android:color/white" />
 
     <Button
@@ -94,7 +95,7 @@
         android:layout_alignTop="@+id/button_taxi"
         android:background="@drawable/rounded_button_white_border"
         android:onClick="other_clicked"
-        android:text="Other"
+        android:text="@string/OTHER"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

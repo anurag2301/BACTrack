@@ -1,7 +1,4 @@
 package com.pervasive_computing.bactrackapp;
-/*
-  Created by Pratik on 11/13/2017.
- */
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +6,11 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class BlowActivity extends BaseActivity {
+/*
+  Created by Pratik on 11/10/2017.
+ */
+
+public class BreatheInActivity extends BaseActivity {
     private static int MAX_PROGRESS;
     private ProgressBar progressBar;
     private int progressStatus;
@@ -27,6 +28,7 @@ public class BlowActivity extends BaseActivity {
         body = findViewById(R.id.breatheBody);
         done = findViewById(R.id.breatheDone);
         processThread();
+
     }
 
     private void processThread() {
@@ -42,6 +44,7 @@ public class BlowActivity extends BaseActivity {
                 body.setText(bodyTxt);
             }
         });
+
         Thread t = new Thread(new Runnable() {
             public void run() {
                 while (progressStatus < MAX_PROGRESS) {

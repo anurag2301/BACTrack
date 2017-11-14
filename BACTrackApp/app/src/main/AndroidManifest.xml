@@ -31,9 +31,11 @@
         <activity android:name=".GetStartedActivity" />
         <activity android:name=".WillYouDrink" />
         <activity android:name=".HowGoingHome" />
-        <activity android:name=".BlowActivity" />
+        <activity android:name=".InitiateActivity" />
         <activity android:name=".FirstPageActivity" />
-        <activity android:name=".BreatheActivity" />
+        <activity android:name=".BreatheInActivity" />
+        <activity android:name=".BreatheOutActivity" />
+        <activity android:name=".BlowActivity" />
     </application>
 
 </manifest>

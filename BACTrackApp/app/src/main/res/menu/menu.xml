@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
     <item
         android:id="@+id/view_contacts"
-        android:title="View Contacts" />
+        android:title="@string/view_contacts" />
     <item
         android:id="@+id/help"
-        android:title="Help" />
+        android:title="@string/help" />
     <item
         android:id="@+id/add_contact"
-        android:title="Add Contact" />
+        android:title="@string/add_contact" />
     <item
         android:id="@+id/back_to_main"
-        android:title="Return to Main" />
+        android:title="@string/return_to_main" />
 </menu>

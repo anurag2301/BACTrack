@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class BlowActivity extends BaseActivity {
+public class BreatheOutActivity extends BaseActivity {
     private static int MAX_PROGRESS;
     private ProgressBar progressBar;
     private int progressStatus;
@@ -31,8 +31,9 @@ public class BlowActivity extends BaseActivity {
 
     private void processThread() {
         final String titleTxt, bodyTxt;
-        titleTxt = "Breathe In";
-        bodyTxt = "Take a deep breath for\na few seconds.";
+        titleTxt = "Breathe Out";
+        bodyTxt = "Deep Breath out!";
+
         progressStatus = 0;
         progressBar.setSecondaryProgress(MAX_PROGRESS);
         handler.post(new Runnable() {
@@ -50,7 +51,7 @@ public class BlowActivity extends BaseActivity {
                             progressBar.setProgress(progressStatus);
                             if (progressStatus + 10 >= MAX_PROGRESS) {
                                 done.setText(R.string.DONE);
-                                startActivity(new Intent(getApplicationContext(), BreatheOutActivity.class));
+                                startActivity(new Intent(getApplicationContext(), BlowActivity.class));
                             }
                         }
                     });

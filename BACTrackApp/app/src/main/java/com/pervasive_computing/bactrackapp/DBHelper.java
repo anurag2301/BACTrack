@@ -71,7 +71,7 @@ class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteContact(String phone) {
+    Integer deleteContact(String phone) {
         SQLiteDatabase db = this.getWritableDatabase();
         int delVal = db.delete(CONTACTS_TABLE_NAME,
                 CONTACTS_COLUMN_PHONE + " = ? ",

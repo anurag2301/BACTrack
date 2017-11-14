@@ -2,7 +2,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="app_name">BACTrackApp</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="TEXT_DISCONNECTED">Disconnected</string>
@@ -10,7 +9,7 @@
     <string name="TEXT_DISCOVERING_SERVICES">Discovering services...</string>
     <string name="TEXT_CONNECTED">Connected!</string>
 
-    <string name="TEXT_FIRMWARE_VERSION">"Firmware version: </string>
+    <string name="TEXT_FIRMWARE_VERSION">Firmware version: </string>
     <string name="TEXT_SERIAL_NUMBER">Serial number: </string>
     <string name="TEXT_USE_COUNT">Use count: </string>
     <string name="TEXT_BATTERY_VOLTAGE">Battery voltage: </string>
@@ -27,4 +26,33 @@
     <string name="TEXT_ERR_BLE_NOT_SUPPORTED">Error: BLE is not supported on this device.</string>
     <string name="TEXT_ERR_BLOW_ERROR">Error: Blow process failed.</string>
     <string name="TEXT_ERR_LOCATIONS_NOT_ENABLED">Error: Location services are not enabled.</string>
+    <string name="DONE">Done!</string>
+    <string name="NO">No</string>
+    <string name="MAYBE">Maybe</string>
+    <string name="YES">Yes</string>
+    <string name="WILL_YOU_DRINK">Are you going to drink tonight?</string>
+    <string name="BACKGROUND_IMAGE">Background Image</string>
+    <string name="START">Start</string>
+    <string name="START_PROCESS_MESSAGE">Make sure to wait at least 20 minutes since your last drink for accurate results.</string>
+    <string name="EMPTY_STRING" />
+    <string name="WELCOME_MESSAGE">Welcome to BACtrack!</string>
+    <string name="WELCOME_BODY">Let’s make sure we get you home safely every time.</string>
+    <string name="OR">OR</string>
+    <string name="LETS_GET_STARTED">LET’S GET STARTED</string>
+    <string name="SKIP_FOR_LATER">Skip this for later</string>
+    <string name="HOW_GOING_HOME">How are you getting home?</string>
+    <string name="CAR">Car</string>
+    <string name="WALK">Walk</string>
+    <string name="FRIENDS">Friends</string>
+    <string name="BUS">Bus</string>
+    <string name="TAXI">Taxi</string>
+    <string name="OTHER">Other</string>
+    <string name="DEVICE_IMAGE">BACTrack Device</string>
+    <string name="CHECK_BAC">Check BAC</string>
+    <string name="MAIN_SCREEN_MESSAGE">Measure your BAC level when you’re ready to go home.</string>
+    <string name="HAVE_FUN">Have a fun night and check back soon!</string>
+    <string name="view_contacts">View Contacts</string>
+    <string name="help">Help</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="return_to_main">Return to Main</string>
 </resources>
