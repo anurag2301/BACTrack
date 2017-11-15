@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:windowBackground="@drawable/background_color">
+    android:windowBackground="@drawable/blue_background">
 
     <ListView
         android:id="@+id/listView"

@@ -1,6 +1,6 @@
 <resources>
 
     <style name="BACTrackTheme" parent="@android:style/Theme.Light">
-        <item name="android:windowBackground">@drawable/background_color</item>
+        <item name="android:windowBackground">@drawable/blue_background</item>
     </style>
 </resources>

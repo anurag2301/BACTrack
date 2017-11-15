@@ -1,6 +1,7 @@
 package com.pervasive_computing.bactrackapp;
 
 import android.bluetooth.BluetoothDevice;
+import android.util.Log;
 
 import BACtrackAPI.API.BACtrackAPICallbacks;
 import BACtrackAPI.Constants.BACTrackDeviceType;
@@ -10,26 +11,30 @@ import BACtrackAPI.Constants.BACTrackDeviceType;
  */
 
 public class BAC_Callbacks implements BACtrackAPICallbacks {
+    private static final String TAG = "BAC_Callbacks";
 
     @Override
     public void BACtrackAPIKeyDeclined(String errorMessage) {
         //APIKeyVerificationAlert verify = new APIKeyVerificationAlert();
-        //verify.execute(errorMessage);
+        //verify.wtfxecute(errorMessage);
+        Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
     }
 
     @Override
     public void BACtrackAPIKeyAuthorized() {
-
+        Log.wtf(TAG, "BACtrackAPIKeyAuthorized");
     }
 
     @Override
     public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
         //setStatus(R.string.TEXT_CONNECTED);
+        Log.wtf(TAG, "BACtrackConnected " + bacTrackDeviceType.toString());
     }
 
     @Override
     public void BACtrackDidConnect(String s) {
         //setStatus(R.string.TEXT_DISCOVERING_SERVICES);
+        Log.wtf(TAG, "BACtrackDidConnect " + s);
     }
 
     @Override
@@ -37,74 +42,85 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
         //setStatus(R.string.TEXT_DISCONNECTED);
         //setBatteryStatus("");
         //setCurrentFirmware(null);
+        Log.wtf(TAG, "BACtrackDisconnected");
     }
 
     @Override
     public void BACtrackConnectionTimeout() {
-
+        Log.wtf(TAG, "BACtrackConnectionTimeout");
     }
 
     @Override
     public void BACtrackFoundBreathalyzer(BluetoothDevice bluetoothDevice) {
-        //Log.d(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
+        Log.wtf(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
     }
 
     @Override
     public void BACtrackCountdown(int currentCountdownCount) {
+        Log.wtf(TAG, "BACtrackCountdown " + currentCountdownCount);
         //setStatus(getString(R.string.TEXT_COUNTDOWN) + " " + currentCountdownCount);
     }
 
     @Override
     public void BACtrackStart() {
         //setStatus(R.string.TEXT_BLOW_NOW);
+        Log.wtf(TAG, "BACtrackStart");
     }
 
     @Override
     public void BACtrackBlow() {
         //setStatus(R.string.TEXT_KEEP_BLOWING);
+        Log.wtf(TAG, "BACtrackStart");
     }
 
     @Override
     public void BACtrackAnalyzing() {
+        Log.wtf(TAG, "BACtrackAnalyzing");
         //setStatus(R.string.TEXT_ANALYZING);
     }
 
     @Override
     public void BACtrackResults(float measuredBac) {
+        Log.wtf(TAG, "BACtrackResults " + measuredBac);
         //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
     }
 
     @Override
     public void BACtrackFirmwareVersion(String version) {
+        Log.wtf(TAG, "BACtrackFirmwareVersion " + version);
         //setStatus(getString(R.string.TEXT_FIRMWARE_VERSION) + " " + version);
         //setCurrentFirmware(version);
     }
 
     @Override
     public void BACtrackSerial(String serialHex) {
+        Log.wtf(TAG, "BACtrackSerial " + serialHex);
         //setStatus(getString(R.string.TEXT_SERIAL_NUMBER) + " " + serialHex);
     }
 
     @Override
     public void BACtrackUseCount(int useCount) {
-        //Log.d(TAG, "UseCount: " + useCount);
+
+        Log.wtf(TAG, "UseCount: " + useCount);
         //setStatus(getString(R.string.TEXT_USE_COUNT) + " " + useCount);
     }
 
     @Override
     public void BACtrackBatteryVoltage(float voltage) {
-
+        Log.wtf(TAG, "BACtrackBatteryVoltage " + voltage);
     }
 
     @Override
     public void BACtrackBatteryLevel(int level) {
+        Log.wtf(TAG, "BACtrackBatteryLevel " + level);
         //setBatteryStatus(getString(R.string.TEXT_BATTERY_LEVEL) + " " + level);
 
     }
 
     @Override
     public void BACtrackError(int errorCode) {
-        //if (errorCode == Errors.ERROR_BLOW_ERROR)
+        Log.wtf(TAG, "BACtrackError " + errorCode);
+        //if (errorCode == Errors.wtfRROR_BLOW_ERROR)
         //    setStatus(R.string.TEXT_ERR_BLOW_ERROR);
     }
     /*private class APIKeyVerificationAlert extends AsyncTask<String, Void, String> {
@@ -178,7 +194,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
             result = mAPI.getFirmwareVersion();
         }
         if (!result)
-            Log.e(TAG, "mAPI.getFirmwareVersion() failed");
+            Log.wtf(TAG, "mAPI.getFirmwareVersion() failed");
         else
             Log.d(TAG, "Firmware version requested");
     }
@@ -189,7 +205,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
             result = mAPI.getSerialNumber();
         }
         if (!result)
-            Log.e(TAG, "mAPI.getSerialNumber() failed");
+            Log.wtf(TAG, "mAPI.getSerialNumber() failed");
         else
             Log.d(TAG, "Serial Number requested");
     }
@@ -200,7 +216,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
             result = mAPI.getUseCount();
         }
         if (!result)
-            Log.e(TAG, "mAPI.requestUseCount() failed");
+            Log.wtf(TAG, "mAPI.requestUseCount() failed");
         else
             Log.d(TAG, "Use count requested");
     }
@@ -211,7 +227,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
             result = mAPI.getBreathalyzerBatteryVoltage();
         }
         if (!result)
-            Log.e(TAG, "mAPI.getBreathalyzerBatteryVoltage() failed");
+            Log.wtf(TAG, "mAPI.getBreathalyzerBatteryVoltage() failed");
         else
             Log.d(TAG, "Battery voltage requested");
     }
@@ -222,7 +238,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
             result = mAPI.startCountdown();
         }
         if (!result)
-            Log.e(TAG, "mAPI.startCountdown() failed");
+            Log.wtf(TAG, "mAPI.startCountdown() failed");
         else
             Log.d(TAG, "Blow process start requested");
     }
@@ -289,7 +305,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
     }
 
     protected void sendSMS(String bac) {
-        Log.i("Send SMS", "");
+        Log.wtf("Send SMS", "");
 
         StringBuilder numbers = new StringBuilder();
         DBHelper db = new DBHelper(getApplicationContext());
@@ -305,7 +321,7 @@ public class BAC_Callbacks implements BACtrackAPICallbacks {
         try {
             startActivity(smsIntent);
             //finish();
-            Log.i("Finished sending SMS...", "");
+            Log.wtf("Finished sending SMS...", "");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(MainActivity.this,
                     "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();

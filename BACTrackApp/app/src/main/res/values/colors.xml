@@ -5,6 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="progress_bar_back">#004c8c</color>
     <color name="progress_bar_front">#58a5f0</color>
-    <color name="back_blue_end">#0277bd</color>
-    <color name="back_blue_start">#004ba0</color>
+    <color name="back_blue_start">#0277bd</color>
+    <color name="back_blue_end">#004ba0</color>
+    <color name="back_green_end">#387c31</color>
+    <color name="back_green_start">#67ac5b</color>
+    <color name="back_red_start">#c33e38</color>
+    <color name="back_red_end">#9c221d</color>
 </resources>

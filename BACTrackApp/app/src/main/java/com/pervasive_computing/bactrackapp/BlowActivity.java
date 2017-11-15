@@ -26,7 +26,7 @@ public class BlowActivity extends BaseActivity {
         title = findViewById(R.id.breatheTitle);
         body = findViewById(R.id.breatheBody);
         done = findViewById(R.id.breatheDone);
-        processThread();
+        //processThread();
     }
 
     private void processThread() {

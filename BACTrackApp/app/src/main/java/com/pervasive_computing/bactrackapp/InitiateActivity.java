@@ -2,6 +2,7 @@ package com.pervasive_computing.bactrackapp;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import BACtrackAPI.API.BACtrackAPI;
+import BACtrackAPI.API.BACtrackAPICallbacks;
+import BACtrackAPI.Constants.BACTrackDeviceType;
 import BACtrackAPI.Exceptions.BluetoothLENotSupportedException;
 import BACtrackAPI.Exceptions.BluetoothNotEnabledException;
 import BACtrackAPI.Exceptions.LocationServicesNotEnabledException;
@@ -27,11 +30,126 @@ import BACtrackAPI.Exceptions.LocationServicesNotEnabledException;
 public class InitiateActivity extends BaseActivity {
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
-    private static BACtrackAPI mAPI;
+    private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
+        private static final String TAG = "BAC_Callbacks";
 
-    public static BACtrackAPI getAPIinstance(Context context) throws LocationServicesNotEnabledException, BluetoothLENotSupportedException, BluetoothNotEnabledException, IOException {
-        if (mAPI == null)
-            mAPI = new BACtrackAPI(context, new BAC_Callbacks(), Util.getProperty("BACTRACK_API_KEY", context));
+        @Override
+        public void BACtrackAPIKeyDeclined(String errorMessage) {
+            //APIKeyVerificationAlert verify = new APIKeyVerificationAlert();
+            //verify.wtfxecute(errorMessage);
+            Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
+        }
+
+        @Override
+        public void BACtrackAPIKeyAuthorized() {
+            Log.wtf(TAG, "BACtrackAPIKeyAuthorized");
+        }
+
+        @Override
+        public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
+            //setStatus(R.string.TEXT_CONNECTED);
+            Log.wtf(TAG, "BACtrackConnected " + bacTrackDeviceType.toString());
+        }
+
+        @Override
+        public void BACtrackDidConnect(String s) {
+            //setStatus(R.string.TEXT_DISCOVERING_SERVICES);
+            Log.wtf(TAG, "BACtrackDidConnect " + s);
+        }
+
+        @Override
+        public void BACtrackDisconnected() {
+            //setStatus(R.string.TEXT_DISCONNECTED);
+            //setBatteryStatus("");
+            //setCurrentFirmware(null);
+            Log.wtf(TAG, "BACtrackDisconnected");
+        }
+
+        @Override
+        public void BACtrackConnectionTimeout() {
+            Log.wtf(TAG, "BACtrackConnectionTimeout");
+        }
+
+        @Override
+        public void BACtrackFoundBreathalyzer(BluetoothDevice bluetoothDevice) {
+            Log.wtf(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
+        }
+
+        @Override
+        public void BACtrackCountdown(int currentCountdownCount) {
+            Log.wtf(TAG, "BACtrackCountdown " + currentCountdownCount);
+            //setStatus(getString(R.string.TEXT_COUNTDOWN) + " " + currentCountdownCount);
+        }
+
+        @Override
+        public void BACtrackStart() {
+            //setStatus(R.string.TEXT_BLOW_NOW);
+            Log.wtf(TAG, "BACtrackStart");
+        }
+
+        @Override
+        public void BACtrackBlow() {
+            //setStatus(R.string.TEXT_KEEP_BLOWING);
+            Log.wtf(TAG, "BACtrackStart");
+        }
+
+        @Override
+        public void BACtrackAnalyzing() {
+            Log.wtf(TAG, "BACtrackAnalyzing");
+            //setStatus(R.string.TEXT_ANALYZING);
+        }
+
+        @Override
+        public void BACtrackResults(float measuredBac) {
+            Log.wtf(TAG, "BACtrackResults " + measuredBac);
+            //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
+        }
+
+        @Override
+        public void BACtrackFirmwareVersion(String version) {
+            Log.wtf(TAG, "BACtrackFirmwareVersion " + version);
+            //setStatus(getString(R.string.TEXT_FIRMWARE_VERSION) + " " + version);
+            //setCurrentFirmware(version);
+        }
+
+        @Override
+        public void BACtrackSerial(String serialHex) {
+            Log.wtf(TAG, "BACtrackSerial " + serialHex);
+            //setStatus(getString(R.string.TEXT_SERIAL_NUMBER) + " " + serialHex);
+        }
+
+        @Override
+        public void BACtrackUseCount(int useCount) {
+
+            Log.wtf(TAG, "UseCount: " + useCount);
+            //setStatus(getString(R.string.TEXT_USE_COUNT) + " " + useCount);
+        }
+
+        @Override
+        public void BACtrackBatteryVoltage(float voltage) {
+            Log.wtf(TAG, "BACtrackBatteryVoltage " + voltage);
+        }
+
+        @Override
+        public void BACtrackBatteryLevel(int level) {
+            Log.wtf(TAG, "BACtrackBatteryLevel " + level);
+            //setBatteryStatus(getString(R.string.TEXT_BATTERY_LEVEL) + " " + level);
+
+        }
+
+        @Override
+        public void BACtrackError(int errorCode) {
+            Log.wtf(TAG, "BACtrackError " + errorCode);
+            //if (errorCode == Errors.wtfRROR_BLOW_ERROR)
+            //    setStatus(R.string.TEXT_ERR_BLOW_ERROR);
+        }
+    };
+    private BACtrackAPI mAPI;
+
+    public BACtrackAPI getAPIinstance(Context context) throws LocationServicesNotEnabledException, BluetoothLENotSupportedException, BluetoothNotEnabledException, IOException {
+        if (mAPI == null) {
+            mAPI = new BACtrackAPI(context, mCallbacks, Util.getProperty("BACTRACK_API_KEY", context));
+        }
         return mAPI;
     }
 
@@ -47,13 +165,12 @@ public class InitiateActivity extends BaseActivity {
         }
         //check the status and set the button text accordingly
         else {
-            if (!mBluetoothAdapter.isEnabled()) {
+            while (!mBluetoothAdapter.isEnabled()) {
                 mBluetoothAdapter.enable();
-                while (!mBluetoothAdapter.isEnabled()) ;
             }
         }
         try {
-            mAPI = getAPIinstance(getApplicationContext());
+            mAPI = getAPIinstance(InitiateActivity.this);
             //mContext = this;
         } catch (BluetoothLENotSupportedException e) {
             e.printStackTrace();
