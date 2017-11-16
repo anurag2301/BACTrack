@@ -55,4 +55,5 @@
     <string name="help">Help</string>
     <string name="add_contact">Add Contact</string>
     <string name="return_to_main">Return to Main</string>
+    <string name="BAC_LEVEL">BAC_LEVEL</string>
 </resources>

@@ -114,13 +114,16 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackResults(float measuredBac) {
             Log.wtf(TAG, "BACtrackResults " + measuredBac);
+            Intent i;
             if (measuredBac < 0.4) {
-                startActivity(new Intent(getApplicationContext(), GreenActivity.class));
+                i = new Intent(getApplicationContext(), GreenActivity.class);
             } else if (measuredBac < 0.8) {
-                startActivity(new Intent(getApplicationContext(), YellowActivity.class));
+                i = new Intent(getApplicationContext(), YellowActivity.class);
             } else {
-                startActivity(new Intent(getApplicationContext(), RedActivity.class));
+                i = new Intent(getApplicationContext(), RedActivity.class);
             }
+            i.putExtra(getString(R.string.BAC_LEVEL), measuredBac);
+            startActivity(i);
             finish();
             //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
         }

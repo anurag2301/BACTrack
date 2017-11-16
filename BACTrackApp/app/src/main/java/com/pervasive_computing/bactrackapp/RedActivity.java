@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class RedActivity extends BaseActivity {
@@ -16,6 +17,9 @@ public class RedActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.red_screen);
+        float bac_level = getIntent().getFloatExtra(getString(R.string.BAC_LEVEL), -1);
+        TextView textView = findViewById(R.id.textView5);
+        textView.setText(String.format("BAC: %s", bac_level));
     }
 
     protected void sendSMS(String bac) {
