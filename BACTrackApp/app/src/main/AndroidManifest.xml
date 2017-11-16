@@ -36,6 +36,9 @@
         <activity android:name=".BreatheInActivity" />
         <activity android:name=".BreatheOutActivity" />
         <activity android:name=".BlowActivity" />
+        <activity android:name=".GreenActivity" />
+        <activity android:name=".RedActivity" />
+        <activity android:name=".YellowActivity" />
     </application>
 
 </manifest>

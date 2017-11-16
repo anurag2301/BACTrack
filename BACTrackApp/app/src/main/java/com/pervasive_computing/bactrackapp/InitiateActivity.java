@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -30,6 +32,9 @@ import BACtrackAPI.Exceptions.LocationServicesNotEnabledException;
 public class InitiateActivity extends BaseActivity {
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
+    private boolean bacConnected;
+    private RelativeLayout loading_panel;
+    private Button start_button;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BAC_Callbacks";
 
@@ -48,6 +53,13 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
             //setStatus(R.string.TEXT_CONNECTED);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    loading_panel.setVisibility(View.GONE);
+                    start_button.setEnabled(true);
+                }
+            });
             Log.wtf(TAG, "BACtrackConnected " + bacTrackDeviceType.toString());
         }
 
@@ -102,6 +114,14 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackResults(float measuredBac) {
             Log.wtf(TAG, "BACtrackResults " + measuredBac);
+            if (measuredBac < 0.4) {
+                startActivity(new Intent(getApplicationContext(), GreenActivity.class));
+            } else if (measuredBac < 0.8) {
+                startActivity(new Intent(getApplicationContext(), YellowActivity.class));
+            } else {
+                startActivity(new Intent(getApplicationContext(), RedActivity.class));
+            }
+            finish();
             //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
         }
 
@@ -157,6 +177,9 @@ public class InitiateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_process);
+        bacConnected = false;
+        start_button = findViewById(R.id.start_button);
+        loading_panel = findViewById(R.id.loadingPanel);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //check if adatpter is available, please note if you running
         //this application in emulator currently there is no support for bluetooth
@@ -222,10 +245,9 @@ public class InitiateActivity extends BaseActivity {
             result = mAPI.startCountdown();
         }
         if (!result)
-            Log.e(TAG, "mAPI.startCountdown() failed");
+            Log.wtf(TAG, "mAPI.startCountdown() failed");
         else
-            Log.d(TAG, "Blow process start requested");
-
+            Log.wtf(TAG, "Blow process start requested");
         startActivity(new Intent(getApplicationContext(), BreatheInActivity.class));
     }
 }

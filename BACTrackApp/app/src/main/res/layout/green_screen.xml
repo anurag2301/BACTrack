@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/green_background">
+
+    <ImageView
+        android:id="@+id/image_holiday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:alpha="1"
+        android:contentDescription="@string/BACKGROUND_IMAGE"
+        android:paddingBottom="200dp"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        app:srcCompat="@mipmap/holiday" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="126dp"
+        android:text="@string/HAVE_FUN"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="30sp" />
+
+
+</RelativeLayout>

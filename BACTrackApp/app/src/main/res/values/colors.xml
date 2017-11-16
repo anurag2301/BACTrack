@@ -11,4 +11,6 @@
     <color name="back_green_start">#67ac5b</color>
     <color name="back_red_start">#c33e38</color>
     <color name="back_red_end">#9c221d</color>
+    <color name="back_yellow_end">#c25e00</color>
+    <color name="back_yellow_start">#fb8c00</color>
 </resources>
