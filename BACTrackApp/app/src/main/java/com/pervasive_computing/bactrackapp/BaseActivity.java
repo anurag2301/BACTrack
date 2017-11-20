@@ -14,15 +14,17 @@ import android.view.MenuItem;
   Created by Pratik on 11/05/2017.
  */
 
-public abstract class BaseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class BaseActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     public void setContentView(int layoutResID) {
-        DrawerLayout fullView = (DrawerLayout) getLayoutInflater().inflate(R.layout.drawer, null);
-        CoordinatorLayout activityContainer = fullView.findViewById(R.id.app_bar_main);
-        getLayoutInflater().inflate(layoutResID, activityContainer, true);
-        super.setContentView(fullView);
+        DrawerLayout drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.drawer_layout, null);
+        NavigationView navigationView = drawerLayout.findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+        CoordinatorLayout coordinatorLayout = drawerLayout.findViewById(R.id.coordinator_layout);
+        getLayoutInflater().inflate(layoutResID, coordinatorLayout, true);
+        super.setContentView(drawerLayout);
     }
 
     @Override
@@ -44,41 +46,32 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
+        boolean result = handleMenu(item.getItemId());
+        return result || super.onOptionsItemSelected(item);
+    }
+
+    private boolean handleMenu(int menuItemId) {
+
+        switch (menuItemId) {
             case R.id.view_contacts:
-                startActivity(new Intent(this, ListContacts.class));
+                startActivity(new Intent(getApplicationContext(), ListContacts.class));
                 return true;
             case R.id.help:
                 return true;
             case R.id.add_contact:
-                startActivity(new Intent(this, ContactPicker.class));
+                startActivity(new Intent(getApplicationContext(), ContactPicker.class));
                 return true;
             case R.id.back_to_main:
-                startActivity(new Intent(this, FirstPageActivity.class));
+                startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return false;
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        switch (item.getItemId()) {
-            case R.id.view_contacts:
-                startActivity(new Intent(this, ListContacts.class));
-                return true;
-            case R.id.help:
-                return true;
-            case R.id.add_contact:
-                startActivity(new Intent(this, ContactPicker.class));
-                return true;
-            case R.id.back_to_main:
-                startActivity(new Intent(this, FirstPageActivity.class));
-                return true;
-        }
+        handleMenu(item.getItemId());
         DrawerLayout drawer = findViewById(R.id.activity_container);
         drawer.closeDrawer(GravityCompat.START);
         return true;
