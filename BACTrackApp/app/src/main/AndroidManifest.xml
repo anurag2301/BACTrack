@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -39,6 +41,8 @@
         <activity android:name=".GreenActivity" />
         <activity android:name=".RedActivity" />
         <activity android:name=".YellowActivity" />
+
+        <service android:name=".LocationService" android:process=":location_service" />
     </application>
 
 </manifest>
