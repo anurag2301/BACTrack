@@ -20,9 +20,10 @@ public class RedActivity extends BaseActivity {
         float bac_level = getIntent().getFloatExtra(getString(R.string.BAC_LEVEL), -1);
         TextView textView = findViewById(R.id.textView5);
         textView.setText(String.format("BAC: %s", bac_level));
+        sendSMS(bac_level);
     }
 
-    protected void sendSMS(String bac) {
+    protected void sendSMS(float bac) {
         Log.wtf("Send SMS", "");
 
         StringBuilder numbers = new StringBuilder();

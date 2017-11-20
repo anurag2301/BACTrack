@@ -30,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GetStartedActivity" />
         <activity android:name=".WillYouDrink" />
         <activity android:name=".HowGoingHome" />
         <activity android:name=".InitiateActivity" />
@@ -42,7 +41,9 @@
         <activity android:name=".RedActivity" />
         <activity android:name=".YellowActivity" />
 
-        <service android:name=".LocationService" android:process=":location_service" />
+        <service
+            android:name=".LocationService"
+            android:process=":location_service" />
     </application>
 
 </manifest>
