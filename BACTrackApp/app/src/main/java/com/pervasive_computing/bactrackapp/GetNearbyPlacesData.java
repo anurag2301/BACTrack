@@ -68,13 +68,13 @@ public class GetNearbyPlacesData extends AsyncTask<URL, String, String> {
 
 
     void showNotification(String notificationText) {
-        Intent notificationIntent = new Intent(mContext, LocationActivity.class);
+        Intent notificationIntent = new Intent(mContext, SplashActivity.class);
 
         // Construct a task stack.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
 
         // Add the main Activity to the task stack as the parent.
-        stackBuilder.addParentStack(LocationActivity.class);
+        stackBuilder.addParentStack(SplashActivity.class);
 
         // Push the content Intent onto the stack.
         stackBuilder.addNextIntent(notificationIntent);

@@ -61,4 +61,40 @@
         android:onClick="skip_for_later"
         android:text="@string/SKIP_FOR_LATER"
         android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView android:layout_height="wrap_content"
+            android:textAlignment="viewEnd"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="Location Based Alert"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/request_updates_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/skip_button"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="11dp"
+            android:onClick="requestLocationUpdates"
+            android:padding="15dp"
+            android:background="@drawable/rounded_button_white_border"
+            android:layout_weight="1"
+            android:text="Turn ON"
+            android:textColor="@android:color/white"
+            />
+
+
+
+    </LinearLayout>
+
 </RelativeLayout>
