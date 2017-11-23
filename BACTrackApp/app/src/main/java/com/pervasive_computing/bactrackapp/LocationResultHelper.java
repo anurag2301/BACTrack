@@ -118,7 +118,7 @@ class LocationResultHelper {
      * Displays a notification with the location results.
      */
     void showNotification() {
-        URL lat_lon = NetworkUtilsLocation.buildUrl(getLocationResultText());
+        URL lat_lon = NetworkUtilsLocation.buildUrl(getLocationResultText(), mContext);
         new GetNearbyPlacesData(mContext).execute(lat_lon);
     }
 }

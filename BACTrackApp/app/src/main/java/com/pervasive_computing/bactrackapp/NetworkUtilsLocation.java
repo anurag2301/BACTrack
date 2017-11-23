@@ -1,9 +1,10 @@
 package com.pervasive_computing.bactrackapp;
 
-/**
- * Created by anura on 11/21/2017.
+/*
+  Created by Anurag on 11/21/2017.
  */
 
+import android.content.Context;
 import android.net.Uri;
 
 import java.io.IOException;
@@ -13,35 +14,38 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class NetworkUtilsLocation {
+class NetworkUtilsLocation {
 
-    final static String GITHUB_BASE_URL =
+    private final static String GITHUB_BASE_URL =
             "https://maps.googleapis.com/maps/api/place/radarsearch/json";
 
-    final static String PARAM_LOCATION = "location";
+    private final static String PARAM_LOCATION = "location";
 
     /*
      * The sort field. One of stars, forks, or updated.
      * Default: results are sorted by best match if no field is specified.
      */
-    final static String PARAM_RADIUS = "radius";
-    final static String PARAM_TYPE = "type";
-    final static String PARAM_KEY = "key";
-    final static String GOOGLE_API_KEY = "AIzaSyA4E6jz5n97DZKzG7u3V-AEeachsFpIQKQ";
+    private final static String PARAM_RADIUS = "radius";
+    private final static String RADIUS_VALUE = "15";
+    private final static String TYPE_VALUE = "bar";
+    private final static String PARAM_TYPE = "type";
+    private final static String PARAM_KEY = "key";
+    private final static String API_KEY_VALUE = "GOOGLE_API_KEY";
 
 
     /**
      * Builds the URL used to query GitHub.
      *
      * @param githubSearchQuery The keyword that will be queried for.
+     * @param mContext          Context of Application
      * @return The URL to use to query the GitHub.
      */
-    public static URL buildUrl(String githubSearchQuery) {
+    static URL buildUrl(String githubSearchQuery, Context mContext) {
         Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
                 .appendQueryParameter(PARAM_LOCATION, githubSearchQuery)
-                .appendQueryParameter(PARAM_RADIUS, "15")
-                .appendQueryParameter(PARAM_TYPE, "bar")
-                .appendQueryParameter(PARAM_KEY, GOOGLE_API_KEY)
+                .appendQueryParameter(PARAM_RADIUS, RADIUS_VALUE)
+                .appendQueryParameter(PARAM_TYPE, TYPE_VALUE)
+                .appendQueryParameter(PARAM_KEY, Util.getProperty(API_KEY_VALUE, mContext))
                 .build();
 
         URL url = null;
@@ -60,7 +64,7 @@ public class NetworkUtilsLocation {
      * @return The contents of the HTTP response.
      * @throws IOException Related to network and stream reading
      */
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
+    static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();

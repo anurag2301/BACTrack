@@ -17,7 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,9 +31,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         GoogleApiClient.OnConnectionFailedListener,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final String FIRST_RUN = "firstRun";
-    private final String MY_PREF = "BACTrackPref";
-
     private static final String TAG = SplashActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
     /**
@@ -42,20 +38,19 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
      */
     // FIXME: 5/16/17
     private static final long UPDATE_INTERVAL = 10 * 1000;
-
     /**
      * The fastest rate for active location updates. Updates will never be more frequent
      * than this value, but they may be less frequent.
      */
     // FIXME: 5/14/17
     private static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
-
     /**
      * The max time before batched results are delivered by location services. Results may be
      * delivered sooner than this interval.
      */
     private static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 3;
-
+    private final String FIRST_RUN = "firstRun";
+    private final String MY_PREF = "BACTrackPref";
     /**
      * Stores parameters for requests to the FusedLocationProviderApi.
      */
@@ -300,12 +295,12 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
      * Handles the Request Updates button and requests start of location updates.
      */
     public void requestLocationUpdates(View view) {
-        if(!LocationRequestHelper.getRequesting(this)) {
+        if (!LocationRequestHelper.getRequesting(this)) {
             try {
                 Log.i(TAG, "Starting location updates");
                 LocationRequestHelper.setRequesting(this, true);
                 LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, getPendingIntent());
+                        mGoogleApiClient, mLocationRequest, getPendingIntent());
             } catch (SecurityException e) {
                 LocationRequestHelper.setRequesting(this, false);
                 e.printStackTrace();
