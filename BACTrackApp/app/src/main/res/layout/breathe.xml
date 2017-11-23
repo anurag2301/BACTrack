@@ -1,65 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="25dp"
-        android:alpha="0.14"
-        app:srcCompat="@mipmap/smashicon_pint" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView6"
-        android:layout_marginBottom="31dp"
-        android:alpha="0.14"
-        app:srcCompat="@mipmap/smashicon_pint" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_marginEnd="42dp"
-        android:alpha="0.14"
-        app:srcCompat="@mipmap/smashicon_glass" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView7"
-        android:layout_alignTop="@+id/imageView3"
-        android:alpha="0.14"
-        app:srcCompat="@mipmap/smashicon_glass" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView2"
-        android:layout_alignTop="@+id/imageView7"
-        android:alpha="0.14"
-        app:srcCompat="@mipmap/cheers" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView4"
-        android:layout_centerVertical="true"
-        android:alpha="0.14"
-        app:srcCompat="@mipmap/holiday" />
+    <include
+        layout="@layout/six_imgs_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -87,8 +33,9 @@
         android:id="@+id/breatheBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_toEndOf="@+id/imageView2"
+        android:layout_above="@+id/progressBar"
+        android:layout_alignStart="@+id/breatheTitle"
+        android:layout_marginBottom="32dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@android:color/white" />

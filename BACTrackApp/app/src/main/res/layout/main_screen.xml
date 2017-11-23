@@ -3,92 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="25dp"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_pint" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView6"
-        android:layout_marginBottom="31dp"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_pint" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_marginEnd="42dp"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_glass" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView7"
-        android:layout_alignTop="@+id/imageView3"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_glass" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView2"
-        android:layout_alignTop="@+id/imageView7"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/cheers" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView4"
-        android:layout_centerVertical="true"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/holiday" />
+    <include
+        layout="@layout/six_imgs_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/main_screen_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView3"
+        android:layout_above="@+id/chk_bac_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/MAIN_SCREEN_MESSAGE"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/device_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/chk_bac_button"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="33dp"
         android:contentDescription="@string/DEVICE_IMAGE"
         app:srcCompat="@mipmap/device" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/chk_bac_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

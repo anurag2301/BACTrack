@@ -18,12 +18,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
-        SharedPreferences sharedPreferences = getSharedPreferences(MY_PREF, Context.MODE_PRIVATE);
-        boolean firstRun = sharedPreferences.getBoolean(FIRST_RUN, true);
-        if (!firstRun) {
-            Intent i = new Intent(SplashActivity.this, FirstPageActivity.class);
-            startActivity(i);
+        if (getSharedPreferences(MY_PREF, Context.MODE_PRIVATE).getBoolean(FIRST_RUN, true)) {
+            setContentView(R.layout.splash);
+        } else {
+            startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
             finish();
         }
     }
@@ -33,14 +31,12 @@ public class SplashActivity extends BaseActivity {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putBoolean(FIRST_RUN, false);
         edit.apply();
-        Intent i = new Intent(SplashActivity.this, WillYouDrink.class);
-        startActivity(i);
+        startActivity(new Intent(getApplicationContext(), WillYouDrink.class));
         finish();
     }
 
     public void skip_for_later(View view) {
-        Intent i = new Intent(SplashActivity.this, FirstPageActivity.class);
-        startActivity(i);
+        startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
         finish();
     }
 }

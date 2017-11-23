@@ -18,7 +18,7 @@ public class NetworkUtilsLocation {
     final static String GITHUB_BASE_URL =
             "https://maps.googleapis.com/maps/api/place/radarsearch/json";
 
-    final static String PARAM_LOCATION= "location";
+    final static String PARAM_LOCATION = "location";
 
     /*
      * The sort field. One of stars, forks, or updated.

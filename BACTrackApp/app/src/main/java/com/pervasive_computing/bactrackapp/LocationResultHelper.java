@@ -17,24 +17,18 @@ package com.pervasive_computing.bactrackapp;
 
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.TaskStackBuilder;
-import android.app.NotificationChannel;
-import android.util.AndroidException;
+
 import java.net.URL;
-
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
-
 
 
 /**
@@ -56,11 +50,19 @@ class LocationResultHelper {
         mLocations = locations;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(PRIMARY_CHANNEL,
-                context.getString(R.string.BAC_NOTIFICATION_CHANNEL), NotificationManager.IMPORTANCE_DEFAULT);
+                    context.getString(R.string.BAC_NOTIFICATION_CHANNEL), NotificationManager.IMPORTANCE_DEFAULT);
             channel.setLightColor(Color.GREEN);
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             getNotificationManager().createNotificationChannel(channel);
         }
+    }
+
+    /**
+     * Fetches location results from {@link android.content.SharedPreferences}.
+     */
+    static String getSavedLocationResult(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LOCATION_UPDATES_RESULT, "");
     }
 
     /**
@@ -95,14 +97,6 @@ class LocationResultHelper {
                 .putString(KEY_LOCATION_UPDATES_RESULT, getLocationResultTitle() + "\n" +
                         getLocationResultText())
                 .apply();
-    }
-
-    /**
-     * Fetches location results from {@link android.content.SharedPreferences}.
-     */
-    static String getSavedLocationResult(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LOCATION_UPDATES_RESULT, "");
     }
 
     /**

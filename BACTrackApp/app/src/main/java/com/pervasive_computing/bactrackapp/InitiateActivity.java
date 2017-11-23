@@ -34,7 +34,7 @@ public class InitiateActivity extends BaseActivity {
     private static final String TAG = "InitiateActivity";
     private boolean bacConnected;
     private RelativeLayout loading_panel;
-    private Button start_button;
+    private Button start_button, chk_bac_button;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BAC_Callbacks";
 
@@ -220,9 +220,31 @@ public class InitiateActivity extends BaseActivity {
                 /*
                   Permission already granted, start scan.
                  */
-            mAPI.connectToNearestBreathalyzer();
+            connectToNearestBreathalyzer();
         }
 
+    }
+
+    private void connectToNearestBreathalyzer() {
+        BluetoothDevice bluetoothDevice = null;
+        int tryCount = 1000;
+        try {
+            mAPI.startScan();
+            while (bluetoothDevice == null && tryCount >= 0) {
+                bluetoothDevice = mAPI.stopScanAndGetClosestBreathalyzer();
+                mAPI.startScan();
+                tryCount--;
+            }
+            mAPI.stopScan();
+            if (bluetoothDevice == null) {
+                Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();
+                connectToNearestBreathalyzer();
+                return;
+            }
+            mAPI.connectToDeviceWithTimeout(bluetoothDevice, 1000);
+        } catch (Exception e) {
+            Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -236,7 +258,7 @@ public class InitiateActivity extends BaseActivity {
                     /*
                       Only start scan if permissions granted.
                      */
-                    mAPI.connectToNearestBreathalyzer();
+                    connectToNearestBreathalyzer();
                 }
             }
         }
