@@ -22,13 +22,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ContactPicker" />
         <activity android:name=".ListContacts" />
+
+        <!-- android launch mode Notification Manager  If activity is already running notification intent will be sent to this -->
         <activity
             android:name=".SplashActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+
         </activity>
         <activity android:name=".WillYouDrink" />
         <activity android:name=".HowGoingHome" />
@@ -44,6 +44,28 @@
         <service
             android:name=".LocationService"
             android:process=":location_service" />
+
+        <service
+            android:name=".LocationUpdatesIntentService"
+            android:exported="false" />
+
+        <receiver android:name=".LocationUpdatesBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.location.sample.backgroundlocationupdates.LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_location"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
