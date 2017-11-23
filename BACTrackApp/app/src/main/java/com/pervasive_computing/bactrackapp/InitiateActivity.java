@@ -108,6 +108,12 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackAnalyzing() {
             Log.wtf(TAG, "BACtrackAnalyzing");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setContentView(R.layout.wait_screen);
+                }
+            });
             //setStatus(R.string.TEXT_ANALYZING);
         }
 
