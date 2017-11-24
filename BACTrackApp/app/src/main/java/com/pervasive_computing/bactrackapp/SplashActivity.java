@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
   Created by Pratik on 11/06/2017.
@@ -33,6 +37,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
 
     private static final String TAG = SplashActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE_SMS = 35;
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
@@ -77,12 +82,40 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
             finish();
         }
 
+        /*
+        if (!checkPermissionsSMS()) {
+            requestPermissionsSMS();
+        }
+        */
+        /*
         if (!checkPermissions()) {
             requestPermissions();
         }
+        */
+        List<String> permissionsNeeded = new ArrayList<>();
+        final List<String> permissionsList = new ArrayList<String>();
+        if (!addPermission(permissionsList, Manifest.permission.SEND_SMS))
+            permissionsNeeded.add("android.permission.READ_PHONE_STATE");
+        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsNeeded.add("android.permission.WRITE_EXTERNAL_STORAGE");
+        if(permissionsList.size()>0) {
+            ActivityCompat.requestPermissions(this,
+                    permissionsList.toArray(new String[permissionsList.size()]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE_SMS);
 
+        }
         buildGoogleApiClient();
+    }
 
+    private boolean addPermission(List<String> permissionsList, String permission) {
+
+        if (ContextCompat.checkSelfPermission(SplashActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(permission);
+            // Check for Rationale Option
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permission))
+                return false;
+        }
+        return true;
     }
 
 
@@ -199,6 +232,49 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
+    private boolean checkPermissionsSMS() {
+        Log.i(TAG, "Check SMS permission");
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS);
+        Log.i(TAG, "Check SMS permission" + permissionState);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissionsSMS() {
+        Log.i(TAG, "In request sms permission");
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.SEND_SMS);
+
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to provide additional context.");
+            Snackbar.make(
+                    findViewById(R.id.activity_main),
+                    R.string.permission_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Request permission
+                            ActivityCompat.requestPermissions(SplashActivity.this,
+                                    new String[]{Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION},
+                                    REQUEST_PERMISSIONS_REQUEST_CODE_SMS);
+                        }
+                    })
+                    .show();
+        } else {
+            Log.i(TAG, "Requesting permission");
+            // Request permission. It's possible this can be auto answered if device policy
+            // sets the permission in a given state or the user denied the permission
+            // previously and checked "Never ask again".
+            ActivityCompat.requestPermissions(SplashActivity.this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    REQUEST_PERMISSIONS_REQUEST_CODE_SMS);
+        }
+    }
+
     private void requestPermissions() {
         boolean shouldProvideRationale =
                 ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -234,33 +310,51 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     }
 
     /**
-     * Callback received when a permissions request has been completed.
-     */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         Log.i(TAG, "onRequestPermissionResult");
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (grantResults.length <= 0) {
-                // If user interaction was interrupted, the permission request is cancelled and you
-                // receive empty arrays.
+
                 Log.i(TAG, "User interaction was cancelled.");
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission was granted. Kick off the process of building and connecting
-                // GoogleApiClient.
+
                 buildGoogleApiClient();
             } else {
-                // Permission denied.
 
-                // Notify the user via a SnackBar that they have rejected a core permission for the
-                // app, which makes the Activity useless. In a real app, core permissions would
-                // typically be best requested during a welcome-screen flow.
+                Snackbar.make(
+                        findViewById(R.id.activity_main),
+                        R.string.permission_denied_explanation,
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.settings, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                // Build intent that displays the App settings screen.
+                                Intent intent = new Intent();
+                                intent.setAction(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package",
+                                        BuildConfig.APPLICATION_ID, null);
+                                intent.setData(uri);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
+            }
+        }*/
 
-                // Additionally, it is important to remember that a permission might have been
-                // rejected without asking the user for permission (device policy or "Never ask
-                // again" prompts). Therefore, a user interface affordance is typically implemented
-                // when permissions are denied. Otherwise, your app could appear unresponsive to
-                // touches or interactions which have required permissions.
+        /*
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE_SMS) {
+            if (grantResults.length <= 0) {
+
+                Log.i(TAG, "User interaction was cancelled.");
+            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+
                 Snackbar.make(
                         findViewById(R.id.activity_main),
                         R.string.permission_denied_explanation,
@@ -282,7 +376,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
                         .show();
             }
         }
-    }
+    }*/
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {

@@ -122,7 +122,7 @@ public class InitiateActivity extends BaseActivity {
             Log.wtf(TAG, "BACtrackResults " + measuredBac);
             Intent i;
             if (measuredBac < 0.4) {
-                i = new Intent(getApplicationContext(), GreenActivity.class);
+                i = new Intent(getApplicationContext(), RedActivity.class);
             } else if (measuredBac < 0.8) {
                 i = new Intent(getApplicationContext(), YellowActivity.class);
             } else {
@@ -235,6 +235,7 @@ public class InitiateActivity extends BaseActivity {
         BluetoothDevice bluetoothDevice = null;
         int tryCount = 1000;
         try {
+            /*
             mAPI.startScan();
             while (bluetoothDevice == null && tryCount >= 0) {
                 bluetoothDevice = mAPI.stopScanAndGetClosestBreathalyzer();
@@ -248,6 +249,8 @@ public class InitiateActivity extends BaseActivity {
                 return;
             }
             mAPI.connectToDeviceWithTimeout(bluetoothDevice, 1000);
+            */
+            mAPI.connectToNearestBreathalyzer();
         } catch (Exception e) {
             Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();
         }
