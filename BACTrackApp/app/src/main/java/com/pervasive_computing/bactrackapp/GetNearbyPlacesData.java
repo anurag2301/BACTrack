@@ -14,8 +14,8 @@ import android.support.v4.app.TaskStackBuilder;
 import java.io.IOException;
 import java.net.URL;
 
-/**
- * Created by anura on 11/21/2017.
+/*
+  Created by Anurag on 11/21/2017.
  */
 public class GetNearbyPlacesData extends AsyncTask<URL, String, String> {
 
@@ -57,7 +57,7 @@ public class GetNearbyPlacesData extends AsyncTask<URL, String, String> {
     // COMPLETED (3) Override onPostExecute to display the results in the TextView
     @Override
     protected void onPostExecute(String searchResults) {
-        if (searchResults != null && searchResults.indexOf("ZERO_RESULTS") == -1) {
+        if (searchResults != null && !searchResults.contains("ZERO_RESULTS")) {
             //Found results
             showNotification("Near Bar? Check BAC level");
         } else {
@@ -67,7 +67,7 @@ public class GetNearbyPlacesData extends AsyncTask<URL, String, String> {
     }
 
 
-    void showNotification(String notificationText) {
+    private void showNotification(String notificationText) {
         Intent notificationIntent = new Intent(mContext, SplashActivity.class);
 
         // Construct a task stack.
@@ -94,7 +94,7 @@ public class GetNearbyPlacesData extends AsyncTask<URL, String, String> {
                     .setAutoCancel(true)
                     .setContentIntent(notificationPendingIntent);
             getNotificationManager().notify(0, notificationBuilder.build());
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        } else {
             notificationBuilder = new Notification.Builder(mContext)
                     .setContentTitle("BAC Track")
                     .setContentText(notificationText)

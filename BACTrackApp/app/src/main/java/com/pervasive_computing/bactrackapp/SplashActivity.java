@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -36,36 +34,31 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE_SMS = 35;
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 35;
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
-    // FIXME: 5/16/17
     private static final long UPDATE_INTERVAL = 10 * 1000;
     /**
      * The fastest rate for active location updates. Updates will never be more frequent
      * than this value, but they may be less frequent.
      */
-    // FIXME: 5/14/17
     private static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
     /**
      * The max time before batched results are delivered by location services. Results may be
      * delivered sooner than this interval.
      */
     private static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 3;
-    private final String FIRST_RUN = "firstRun";
-    private final String MY_PREF = "BACTrackPref";
+    private static final String FIRST_RUN = "firstRun";
+    private static final String MY_PREF = "BACTrackPref";
     /**
      * Stores parameters for requests to the FusedLocationProviderApi.
      */
     private LocationRequest mLocationRequest;
-
     /**
      * The entry point to Google Play Services.
      */
     private GoogleApiClient mGoogleApiClient;
-
     // UI Widgets.
     private Button mRequestUpdatesButton;
 
@@ -73,7 +66,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRequestUpdatesButton = (Button) findViewById(R.id.request_updates_button);
+        mRequestUpdatesButton = findViewById(R.id.request_updates_button);
 
         if (getSharedPreferences(MY_PREF, Context.MODE_PRIVATE).getBoolean(FIRST_RUN, true)) {
             setContentView(R.layout.splash);
@@ -81,27 +74,16 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
             startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
             finish();
         }
-
-        /*
-        if (!checkPermissionsSMS()) {
-            requestPermissionsSMS();
-        }
-        */
-        /*
-        if (!checkPermissions()) {
-            requestPermissions();
-        }
-        */
         List<String> permissionsNeeded = new ArrayList<>();
-        final List<String> permissionsList = new ArrayList<String>();
+        final List<String> permissionsList = new ArrayList<>();
         if (!addPermission(permissionsList, Manifest.permission.SEND_SMS))
             permissionsNeeded.add("android.permission.READ_PHONE_STATE");
         if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
             permissionsNeeded.add("android.permission.WRITE_EXTERNAL_STORAGE");
-        if(permissionsList.size()>0) {
+        if (permissionsList.size() > 0) {
             ActivityCompat.requestPermissions(this,
                     permissionsList.toArray(new String[permissionsList.size()]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE_SMS);
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
 
         }
         buildGoogleApiClient();
@@ -109,7 +91,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
 
     private boolean addPermission(List<String> permissionsList, String permission) {
 
-        if (ContextCompat.checkSelfPermission(SplashActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
             permissionsList.add(permission);
             // Check for Rationale Option
             if (!ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permission))
@@ -122,7 +104,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     protected void onStart() {
         super.onStart();
-        mRequestUpdatesButton = (Button) findViewById(R.id.request_updates_button);
+        mRequestUpdatesButton = findViewById(R.id.request_updates_button);
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
     }
@@ -131,7 +113,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     protected void onResume() {
         super.onResume();
-        mRequestUpdatesButton = (Button) findViewById(R.id.request_updates_button);
+        mRequestUpdatesButton = findViewById(R.id.request_updates_button);
         updateButtonsState(LocationRequestHelper.getRequesting(this));
     }
 
@@ -223,161 +205,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         }
     }
 
-    /**
-     * Return the current state of the permissions needed.
-     */
-    private boolean checkPermissions() {
-        int permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private boolean checkPermissionsSMS() {
-        Log.i(TAG, "Check SMS permission");
-        int permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS);
-        Log.i(TAG, "Check SMS permission" + permissionState);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermissionsSMS() {
-        Log.i(TAG, "In request sms permission");
-        boolean shouldProvideRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.SEND_SMS);
-
-        // Provide an additional rationale to the user. This would happen if the user denied the
-        // request previously, but didn't check the "Don't ask again" checkbox.
-        if (shouldProvideRationale) {
-            Log.i(TAG, "Displaying permission rationale to provide additional context.");
-            Snackbar.make(
-                    findViewById(R.id.activity_main),
-                    R.string.permission_rationale,
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.ok, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // Request permission
-                            ActivityCompat.requestPermissions(SplashActivity.this,
-                                    new String[]{Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION},
-                                    REQUEST_PERMISSIONS_REQUEST_CODE_SMS);
-                        }
-                    })
-                    .show();
-        } else {
-            Log.i(TAG, "Requesting permission");
-            // Request permission. It's possible this can be auto answered if device policy
-            // sets the permission in a given state or the user denied the permission
-            // previously and checked "Never ask again".
-            ActivityCompat.requestPermissions(SplashActivity.this,
-                    new String[]{Manifest.permission.SEND_SMS},
-                    REQUEST_PERMISSIONS_REQUEST_CODE_SMS);
-        }
-    }
-
-    private void requestPermissions() {
-        boolean shouldProvideRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION);
-
-        // Provide an additional rationale to the user. This would happen if the user denied the
-        // request previously, but didn't check the "Don't ask again" checkbox.
-        if (shouldProvideRationale) {
-            Log.i(TAG, "Displaying permission rationale to provide additional context.");
-            Snackbar.make(
-                    findViewById(R.id.activity_main),
-                    R.string.permission_rationale,
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.ok, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // Request permission
-                            ActivityCompat.requestPermissions(SplashActivity.this,
-                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                    REQUEST_PERMISSIONS_REQUEST_CODE);
-                        }
-                    })
-                    .show();
-        } else {
-            Log.i(TAG, "Requesting permission");
-            // Request permission. It's possible this can be auto answered if device policy
-            // sets the permission in a given state or the user denied the permission
-            // previously and checked "Never ask again".
-            ActivityCompat.requestPermissions(SplashActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
-
-    /**
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        Log.i(TAG, "onRequestPermissionResult");
-        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.length <= 0) {
-
-                Log.i(TAG, "User interaction was cancelled.");
-            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                buildGoogleApiClient();
-            } else {
-
-                Snackbar.make(
-                        findViewById(R.id.activity_main),
-                        R.string.permission_denied_explanation,
-                        Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.settings, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // Build intent that displays the App settings screen.
-                                Intent intent = new Intent();
-                                intent.setAction(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package",
-                                        BuildConfig.APPLICATION_ID, null);
-                                intent.setData(uri);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        })
-                        .show();
-            }
-        }*/
-
-        /*
-        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE_SMS) {
-            if (grantResults.length <= 0) {
-
-                Log.i(TAG, "User interaction was cancelled.");
-            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-            } else {
-
-                Snackbar.make(
-                        findViewById(R.id.activity_main),
-                        R.string.permission_denied_explanation,
-                        Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.settings, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // Build intent that displays the App settings screen.
-                                Intent intent = new Intent();
-                                intent.setAction(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package",
-                                        BuildConfig.APPLICATION_ID, null);
-                                intent.setData(uri);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        })
-                        .show();
-            }
-        }
-    }*/
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s.equals(LocationRequestHelper.KEY_LOCATION_UPDATES_REQUESTED)) {
@@ -393,8 +220,9 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
             try {
                 Log.i(TAG, "Starting location updates");
                 LocationRequestHelper.setRequesting(this, true);
-                LocationServices.FusedLocationApi.requestLocationUpdates(
-                        mGoogleApiClient, mLocationRequest, getPendingIntent());
+                LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, getPendingIntent());
+                //LocationServices.FusedLocationApi.requestLocationUpdates(
+                //        mGoogleApiClient, mLocationRequest, getPendingIntent());
             } catch (SecurityException e) {
                 LocationRequestHelper.setRequesting(this, false);
                 e.printStackTrace();
@@ -410,8 +238,9 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     public void removeLocationUpdates(View view) {
         Log.i(TAG, "Removing location updates");
         LocationRequestHelper.setRequesting(this, false);
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
-                getPendingIntent());
+        LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(getPendingIntent());
+        //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
+        //      getPendingIntent());
     }
 
     /**
@@ -422,11 +251,11 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     private void updateButtonsState(boolean requestingLocationUpdates) {
         if (requestingLocationUpdates) {
             mRequestUpdatesButton.setEnabled(true);
-            mRequestUpdatesButton.setText("Turn OFF");
+            mRequestUpdatesButton.setText(R.string.turn_off);
 
         } else {
             mRequestUpdatesButton.setEnabled(true);
-            mRequestUpdatesButton.setText("Turn ON");
+            mRequestUpdatesButton.setText(R.string.turn_on);
 
         }
     }

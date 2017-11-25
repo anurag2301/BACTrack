@@ -32,16 +32,13 @@ import BACtrackAPI.Exceptions.LocationServicesNotEnabledException;
 public class InitiateActivity extends BaseActivity {
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
-    private boolean bacConnected;
     private RelativeLayout loading_panel;
-    private Button start_button, chk_bac_button;
+    private Button start_button;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BAC_Callbacks";
 
         @Override
         public void BACtrackAPIKeyDeclined(String errorMessage) {
-            //APIKeyVerificationAlert verify = new APIKeyVerificationAlert();
-            //verify.wtfxecute(errorMessage);
             Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
         }
 
@@ -52,7 +49,6 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
-            //setStatus(R.string.TEXT_CONNECTED);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -65,15 +61,11 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackDidConnect(String s) {
-            //setStatus(R.string.TEXT_DISCOVERING_SERVICES);
             Log.wtf(TAG, "BACtrackDidConnect " + s);
         }
 
         @Override
         public void BACtrackDisconnected() {
-            //setStatus(R.string.TEXT_DISCONNECTED);
-            //setBatteryStatus("");
-            //setCurrentFirmware(null);
             Log.wtf(TAG, "BACtrackDisconnected");
         }
 
@@ -90,19 +82,16 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackCountdown(int currentCountdownCount) {
             Log.wtf(TAG, "BACtrackCountdown " + currentCountdownCount);
-            //setStatus(getString(R.string.TEXT_COUNTDOWN) + " " + currentCountdownCount);
         }
 
         @Override
         public void BACtrackStart() {
-            //setStatus(R.string.TEXT_BLOW_NOW);
             Log.wtf(TAG, "BACtrackStart");
         }
 
         @Override
         public void BACtrackBlow() {
-            //setStatus(R.string.TEXT_KEEP_BLOWING);
-            Log.wtf(TAG, "BACtrackStart");
+            Log.wtf(TAG, getString(R.string.TEXT_KEEP_BLOWING));
         }
 
         @Override
@@ -114,7 +103,6 @@ public class InitiateActivity extends BaseActivity {
                     setContentView(R.layout.wait_screen);
                 }
             });
-            //setStatus(R.string.TEXT_ANALYZING);
         }
 
         @Override
@@ -131,7 +119,6 @@ public class InitiateActivity extends BaseActivity {
             i.putExtra(getString(R.string.BAC_LEVEL), measuredBac);
             startActivity(i);
             finish();
-            //setStatus(getString(R.string.TEXT_FINISHED) + " " + measuredBac);
         }
 
         @Override
@@ -162,15 +149,11 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackBatteryLevel(int level) {
             Log.wtf(TAG, "BACtrackBatteryLevel " + level);
-            //setBatteryStatus(getString(R.string.TEXT_BATTERY_LEVEL) + " " + level);
-
         }
 
         @Override
         public void BACtrackError(int errorCode) {
             Log.wtf(TAG, "BACtrackError " + errorCode);
-            //if (errorCode == Errors.wtfRROR_BLOW_ERROR)
-            //    setStatus(R.string.TEXT_ERR_BLOW_ERROR);
         }
     };
     private BACtrackAPI mAPI;
@@ -186,12 +169,10 @@ public class InitiateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_process);
-        bacConnected = false;
         start_button = findViewById(R.id.start_button);
         loading_panel = findViewById(R.id.loadingPanel);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        //check if adatpter is available, please note if you running
-        //this application in emulator currently there is no support for bluetooth
+        //check if adaptor is available
         if (mBluetoothAdapter == null) {
             Toast.makeText(InitiateActivity.this, "BlueTooth adapter not found", Toast.LENGTH_SHORT).show();
         }
@@ -203,17 +184,12 @@ public class InitiateActivity extends BaseActivity {
         }
         try {
             mAPI = getAPIinstance(InitiateActivity.this);
-            //mContext = this;
         } catch (BluetoothLENotSupportedException e) {
             e.printStackTrace();
-            //this.setStatus(R.string.TEXT_ERR_BLE_NOT_SUPPORTED);
         } catch (BluetoothNotEnabledException e) {
             Toast.makeText(InitiateActivity.this, R.string.TEXT_ERR_BT_NOT_ENABLED, Toast.LENGTH_SHORT).show();
-            //e.printStackTrace();
-            //this.setStatus(R.string.TEXT_ERR_BT_NOT_ENABLED);
         } catch (LocationServicesNotEnabledException e) {
             e.printStackTrace();
-            //this.setStatus(R.string.TEXT_ERR_LOCATIONS_NOT_ENABLED);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,24 +208,7 @@ public class InitiateActivity extends BaseActivity {
     }
 
     private void connectToNearestBreathalyzer() {
-        BluetoothDevice bluetoothDevice = null;
-        int tryCount = 1000;
         try {
-            /*
-            mAPI.startScan();
-            while (bluetoothDevice == null && tryCount >= 0) {
-                bluetoothDevice = mAPI.stopScanAndGetClosestBreathalyzer();
-                mAPI.startScan();
-                tryCount--;
-            }
-            mAPI.stopScan();
-            if (bluetoothDevice == null) {
-                Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();
-                connectToNearestBreathalyzer();
-                return;
-            }
-            mAPI.connectToDeviceWithTimeout(bluetoothDevice, 1000);
-            */
             mAPI.connectToNearestBreathalyzer();
         } catch (Exception e) {
             Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();

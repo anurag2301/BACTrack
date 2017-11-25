@@ -65,22 +65,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-        <TextView android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:layout_marginTop="12dp"
-            android:textAlignment="viewEnd"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
+            android:padding="15dp"
             android:text="Location Based Alert"
+            android:textAlignment="viewEnd"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/text_medium"
-            />
+            android:textSize="@dimen/text_medium" />
 
         <Button
             android:id="@+id/request_updates_button"
@@ -89,14 +89,12 @@
             android:layout_above="@+id/skip_button"
             android:layout_centerHorizontal="true"
             android:layout_margin="11dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_white_border"
             android:onClick="requestLocationUpdates"
             android:padding="15dp"
-            android:background="@drawable/rounded_button_white_border"
-            android:layout_weight="1"
             android:text="Turn ON"
-            android:textColor="@android:color/white"
-            />
-
+            android:textColor="@android:color/white" />
 
 
     </LinearLayout>

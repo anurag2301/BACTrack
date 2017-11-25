@@ -12,12 +12,10 @@ import java.util.List;
 
 /**
  * Receiver for handling location updates.
- * <p>
  * For apps targeting API level O
  * {@link android.app.PendingIntent#getBroadcast(Context, int, Intent, int)} should be used when
  * requesting location updates. Due to limits on background services,
  * {@link android.app.PendingIntent#getService(Context, int, Intent, int)} should not be used.
- * <p>
  * Note: Apps running on "O" devices (regardless of targetSdkVersion) may receive updates
  * less frequently than the interval specified in the
  * {@link com.google.android.gms.location.LocationRequest} when the app is no longer in the
