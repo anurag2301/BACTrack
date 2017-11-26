@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 public class RedActivity extends BaseActivity {
     private static final String TAG = "RedActivity";
     private final static String KEY_LOCATION_UPDATES_RESULT = "location-update-result";
+    private Button mRequestUpdatesButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,7 @@ public class RedActivity extends BaseActivity {
         float bac_level = getIntent().getFloatExtra(getString(R.string.BAC_LEVEL), -1);
         TextView textView = findViewById(R.id.textView5);
         textView.setText(String.format("BAC: %s", bac_level));
+        mRequestUpdatesButton = findViewById(R.id.request_updates_button);
         sendSMS(bac_level);
     }
 
@@ -38,8 +41,8 @@ public class RedActivity extends BaseActivity {
         }
         String smsText = "My BAC level is " + bac;
         String location = getIntent().getStringExtra(KEY_LOCATION_UPDATES_RESULT);
-        if(location!=null && !location.equals("")) {
-            smsText += " and my location is " + location;
+        if(location!=null && !location.equals("") && LocationRequestHelper.getRequesting(this)) {
+            smsText += " and my location is https://www.google.com/maps/search/?api=1&query=" + location;
         }
         smsText += ".";
         SmsManager sm = SmsManager.getDefault();
