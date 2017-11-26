@@ -1,7 +1,9 @@
 package com.pervasive_computing.bactrackapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +35,7 @@ public class ListContacts extends BaseActivity {
         populateList();
     }
 
+    @SuppressLint("ResourceAsColor")
     private void populateList() {
         setContentView(R.layout.contact_list);
         contacts = new ArrayList<>();
@@ -41,8 +44,11 @@ public class ListContacts extends BaseActivity {
         for (String phone : contactsMap.keySet())
             contacts.add(new Contact(contactsMap.get(phone), phone));
         ListView listView = findViewById(R.id.listView);
+        listView.setBackgroundColor(Color.WHITE);
+        listView.setDrawingCacheBackgroundColor(Color.WHITE);
         listAdapter = new CustomListAdapter(contacts, getApplicationContext());
         listView.setAdapter(listAdapter);
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
