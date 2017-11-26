@@ -1,6 +1,7 @@
 package com.pervasive_computing.bactrackapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         DrawerLayout drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.drawer_layout, null);
         NavigationView navigationView = drawerLayout.findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setBackgroundColor(Color.WHITE);
         CoordinatorLayout coordinatorLayout = drawerLayout.findViewById(R.id.coordinator_layout);
         getLayoutInflater().inflate(layoutResID, coordinatorLayout, true);
         super.setContentView(drawerLayout);
@@ -93,6 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+
         return true;
     }
 
