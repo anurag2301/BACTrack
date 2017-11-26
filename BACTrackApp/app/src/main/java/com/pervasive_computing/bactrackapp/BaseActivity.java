@@ -114,7 +114,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
                 startActivity(new Intent(getApplicationContext(), ContactPicker.class));
                 return true;
             case R.id.back_to_main:
-                startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+                //startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+                startActivity(new Intent(getApplicationContext(), SplashActivity.class));
                 return true;
             default:
                 return false;
