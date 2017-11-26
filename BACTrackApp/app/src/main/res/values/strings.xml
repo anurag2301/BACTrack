@@ -35,7 +35,7 @@
     <string name="START">Start</string>
     <string name="START_PROCESS_MESSAGE">Make sure to wait at least 20 minutes since your last drink for accurate results.</string>
     <string name="EMPTY_STRING" />
-    <string name="WELCOME_MESSAGE">Welcome to BACtrack!</string>
+    <string name="WELCOME_MESSAGE">Welcome to\nBACtrack!</string>
     <string name="WELCOME_BODY">Let’s make sure we get you home safely every time.</string>
     <string name="OR">OR</string>
     <string name="LETS_GET_STARTED">LET’S GET STARTED</string>

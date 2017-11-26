@@ -54,15 +54,15 @@
         android:id="@+id/skip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView4"
+        android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
         android:background="@android:color/transparent"
         android:onClick="skip_for_later"
         android:text="@string/SKIP_FOR_LATER"
         android:textColor="@android:color/white" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="12dp"
             android:layout_weight="1"

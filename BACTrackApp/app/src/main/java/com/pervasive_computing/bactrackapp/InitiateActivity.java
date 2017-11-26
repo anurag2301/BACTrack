@@ -35,8 +35,6 @@ public class InitiateActivity extends BaseActivity {
     private final static String KEY_LOCATION_UPDATES_RESULT = "location-update-result";
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
-    private RelativeLayout loading_panel;
-    private Button start_button;
     TextView wait_message;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BACtrackAPICallbacks";
@@ -46,7 +44,7 @@ public class InitiateActivity extends BaseActivity {
             Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
             final StringBuilder error = new StringBuilder();
             error.append("Please ");
-            if(errorMessage.contains("connect to the Internet"))
+            if (errorMessage.contains("connect to the Internet"))
                 error.append("connect to the Internet and ");
             error.append("restart the App");
             runOnUiThread(new Runnable() {
@@ -157,7 +155,7 @@ public class InitiateActivity extends BaseActivity {
             }
 
             String lat_lon = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(KEY_LOCATION_UPDATES_RESULT, "");
-            Log.wtf(TAG, "smsLATLON "+ lat_lon);
+            Log.wtf(TAG, "smsLATLON " + lat_lon);
             i.putExtra(getString(R.string.BAC_LEVEL), measuredBac);
             i.putExtra(KEY_LOCATION_UPDATES_RESULT, lat_lon);
             startActivity(i);
@@ -194,6 +192,8 @@ public class InitiateActivity extends BaseActivity {
             Log.wtf(TAG, "BACtrackError " + errorCode);
         }
     };
+    private RelativeLayout loading_panel;
+    private Button start_button;
     private BACtrackAPI mAPI;
 
     public BACtrackAPI getAPIinstance(Context context) throws LocationServicesNotEnabledException, BluetoothLENotSupportedException, BluetoothNotEnabledException, IOException {
