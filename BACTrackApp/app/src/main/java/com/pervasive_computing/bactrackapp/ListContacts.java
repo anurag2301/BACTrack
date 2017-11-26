@@ -49,7 +49,7 @@ public class ListContacts extends BaseActivity {
         ListView listView = findViewById(R.id.listView);
         mTV = findViewById(R.id.contactListTV);
 
-        if (contactsMap == null || contactsMap.isEmpty()) {
+        if (contactsMap.isEmpty()) {
             mTV.setVisibility(View.VISIBLE);
         } else {
             mTV.setVisibility(View.GONE);
