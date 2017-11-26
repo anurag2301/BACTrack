@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -31,6 +32,7 @@ import BACtrackAPI.Exceptions.LocationServicesNotEnabledException;
  */
 
 public class InitiateActivity extends BaseActivity {
+    private final static String KEY_LOCATION_UPDATES_RESULT = "location-update-result";
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
     private RelativeLayout loading_panel;
@@ -153,7 +155,11 @@ public class InitiateActivity extends BaseActivity {
             } else {
                 i = new Intent(getApplicationContext(), RedActivity.class);
             }
+
+            String lat_lon = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(KEY_LOCATION_UPDATES_RESULT, "");
+            Log.wtf(TAG, "smsLATLON "+ lat_lon);
             i.putExtra(getString(R.string.BAC_LEVEL), measuredBac);
+            i.putExtra(KEY_LOCATION_UPDATES_RESULT, lat_lon);
             startActivity(i);
             finish();
         }

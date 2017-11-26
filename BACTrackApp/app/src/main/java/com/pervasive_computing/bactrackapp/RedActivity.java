@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class RedActivity extends BaseActivity {
     private static final String TAG = "RedActivity";
-
+    private final static String KEY_LOCATION_UPDATES_RESULT = "location-update-result";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +36,14 @@ public class RedActivity extends BaseActivity {
         if (allContacts.isEmpty()) {
             return;
         }
+        String smsText = "My BAC level is " + bac;
+        String location = getIntent().getStringExtra(KEY_LOCATION_UPDATES_RESULT);
+        if(location!=null && !location.equals("")) {
+            smsText += " and my location is " + location;
+        }
+        smsText += ".";
         SmsManager sm = SmsManager.getDefault();
-        sm.sendTextMessage(numbers.toString(), null, "Test" + bac, null, null);
+        sm.sendTextMessage(numbers.toString(), null, smsText, null, null);
         Log.wtf(TAG, "Finished sending SMS...");
-
     }
 }

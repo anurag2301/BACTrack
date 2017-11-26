@@ -77,8 +77,7 @@ class LocationResultHelper {
     void saveResults() {
         PreferenceManager.getDefaultSharedPreferences(mContext)
                 .edit()
-                .putString(KEY_LOCATION_UPDATES_RESULT, getLocationResultTitle() + "\n" +
-                        getLocationResultText())
+                .putString(KEY_LOCATION_UPDATES_RESULT, getLocationResultText())
                 .apply();
     }
 
