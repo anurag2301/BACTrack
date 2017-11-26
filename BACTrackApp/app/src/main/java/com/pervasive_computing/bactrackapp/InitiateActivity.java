@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -34,18 +35,24 @@ public class InitiateActivity extends BaseActivity {
     private static final String TAG = "InitiateActivity";
     private RelativeLayout loading_panel;
     private Button start_button;
+    TextView wait_message;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
-        private static final String TAG = "BAC_Callbacks";
+        private static final String TAG = "BACtrackAPICallbacks";
 
         @Override
         public void BACtrackAPIKeyDeclined(String errorMessage) {
             Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
-            /*runOnUiThread(new Runnable() {
+            final StringBuilder error = new StringBuilder();
+            error.append("Please ");
+            if(errorMessage.contains("connect to the Internet"))
+                error.append("connect to the Internet and ");
+            error.append("restart the App");
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(InitiateActivity.this, "Please Restart App", Toast.LENGTH_LONG).show();
+                    wait_message.setText(error.toString());
                 }
-            });*/
+            });
         }
 
         @Override
@@ -58,10 +65,7 @@ public class InitiateActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    start_button = findViewById(R.id.start_button);
-                    loading_panel = findViewById(R.id.loadingPanel);
-                    loading_panel.setVisibility(View.GONE);
-                    start_button.setEnabled(true);
+                    setContentView(R.layout.start_process);
                     //      Toast.makeText(InitiateActivity.this, "Connected", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -70,12 +74,12 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackDidConnect(String s) {
-            /*runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(InitiateActivity.this, "Connecting", Toast.LENGTH_SHORT).show();
+                    wait_message.setText(getString(R.string.TEXT_CONNECTING));
                 }
-            });*/
+            });
             Log.wtf(TAG, "BACtrackDidConnect " + s);
         }
 
@@ -100,7 +104,7 @@ public class InitiateActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    setContentView(R.layout.start_process);
+                    //wait_message.setText(String.format("%s.", getString(R.string.TEXT_CONNECTING)));
                 }
             });
             Log.wtf(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
@@ -130,12 +134,12 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackAnalyzing() {
             Log.wtf(TAG, "BACtrackAnalyzing");
-            runOnUiThread(new Runnable() {
+            /*runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     setContentView(R.layout.wait_screen);
                 }
-            });
+            });*/
         }
 
         @Override
@@ -197,6 +201,8 @@ public class InitiateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wait_screen);
+        wait_message = findViewById(R.id.wait_message);
+        wait_message.setText("Trying to connect to BACTrack device\nPlease check if the device is switched on.");
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //check if adaptor is available
         if (mBluetoothAdapter == null) {
