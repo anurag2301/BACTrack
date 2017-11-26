@@ -40,6 +40,7 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackAPIKeyDeclined(String errorMessage) {
             Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
+            Toast.makeText(InitiateActivity.this, "Could not Connect", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -49,6 +50,7 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
+            Toast.makeText(InitiateActivity.this, "Connected", Toast.LENGTH_SHORT).show();
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -61,11 +63,13 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackDidConnect(String s) {
+            Toast.makeText(InitiateActivity.this, "Connecting", Toast.LENGTH_SHORT).show();
             Log.wtf(TAG, "BACtrackDidConnect " + s);
         }
 
         @Override
         public void BACtrackDisconnected() {
+            Toast.makeText(InitiateActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
             Log.wtf(TAG, "BACtrackDisconnected");
         }
 
@@ -92,6 +96,12 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackBlow() {
             Log.wtf(TAG, getString(R.string.TEXT_KEEP_BLOWING));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setContentView(R.layout.blow);
+                }
+            });
         }
 
         @Override
@@ -124,21 +134,16 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackFirmwareVersion(String version) {
             Log.wtf(TAG, "BACtrackFirmwareVersion " + version);
-            //setStatus(getString(R.string.TEXT_FIRMWARE_VERSION) + " " + version);
-            //setCurrentFirmware(version);
         }
 
         @Override
         public void BACtrackSerial(String serialHex) {
             Log.wtf(TAG, "BACtrackSerial " + serialHex);
-            //setStatus(getString(R.string.TEXT_SERIAL_NUMBER) + " " + serialHex);
         }
 
         @Override
         public void BACtrackUseCount(int useCount) {
-
             Log.wtf(TAG, "UseCount: " + useCount);
-            //setStatus(getString(R.string.TEXT_USE_COUNT) + " " + useCount);
         }
 
         @Override

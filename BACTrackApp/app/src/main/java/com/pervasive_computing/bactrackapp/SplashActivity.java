@@ -77,21 +77,26 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         List<String> permissionsNeeded = new ArrayList<>();
         final List<String> permissionsList = new ArrayList<>();
         if (!addPermission(permissionsList, Manifest.permission.SEND_SMS))
-            permissionsNeeded.add("android.permission.READ_PHONE_STATE");
+            permissionsNeeded.add("android.permission.SEND_SMS");
         if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionsNeeded.add("android.permission.WRITE_EXTERNAL_STORAGE");
+            permissionsNeeded.add("android.permission.ACCESS_FINE_LOCATION");
         if (permissionsList.size() > 0) {
             ActivityCompat.requestPermissions(this,
                     permissionsList.toArray(new String[permissionsList.size()]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
 
         }
-        buildGoogleApiClient();
+        if(isAllowed(Manifest.permission.ACCESS_FINE_LOCATION))
+            buildGoogleApiClient();
+    }
+
+    private boolean isAllowed(String permission){
+        return ContextCompat.checkSelfPermission(getApplicationContext(), permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     private boolean addPermission(List<String> permissionsList, String permission) {
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+        if (!isAllowed(permission)) {
             permissionsList.add(permission);
             // Check for Rationale Option
             if (!ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permission))
