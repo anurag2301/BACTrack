@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +25,7 @@ public class ListContacts extends BaseActivity {
     private ArrayList<Contact> contacts;
     private DBHelper dbInstance;
     private CustomListAdapter listAdapter;
-
+    private TextView mTV;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +44,18 @@ public class ListContacts extends BaseActivity {
         contacts = new ArrayList<>();
         dbInstance = new DBHelper(getApplicationContext());
         HashMap<String, String> contactsMap = dbInstance.getAllContacts();
+
         for (String phone : contactsMap.keySet())
             contacts.add(new Contact(contactsMap.get(phone), phone));
         ListView listView = findViewById(R.id.listView);
+        mTV = findViewById(R.id.contactListTV);
+
+        if(contactsMap == null || contactsMap.isEmpty()) {
+            mTV.setVisibility(View.VISIBLE);
+        } else {
+            mTV.setVisibility(View.GONE);
+        }
+
         listView.setBackgroundColor(Color.WHITE);
         listView.setDrawingCacheBackgroundColor(Color.WHITE);
         listAdapter = new CustomListAdapter(contacts, getApplicationContext());
@@ -69,6 +81,11 @@ public class ListContacts extends BaseActivity {
                                 dbInstance.close();
                                 contacts.remove(contact);
                                 listAdapter.remove(contact);
+                                if(contacts == null || contacts.isEmpty()) {
+                                    mTV.setVisibility(View.VISIBLE);
+                                } else {
+                                    mTV.setVisibility(View.GONE);
+                                }
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

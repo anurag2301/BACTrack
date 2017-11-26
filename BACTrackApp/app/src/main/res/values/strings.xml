@@ -73,6 +73,8 @@
     <string name="batched_location_updates">Batched location updates</string>
     <string name="turn_on">Turn ON</string>
     <string name="turn_off">Turn OFF</string>
+    <string name="contact_list_default_message">No Contacts</string>
+
 
     <plurals name="num_locations_reported">
         <item quantity="zero">No location reported</item>
