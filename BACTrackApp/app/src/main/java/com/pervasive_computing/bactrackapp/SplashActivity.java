@@ -86,8 +86,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
                     REQUEST_PERMISSIONS_REQUEST_CODE);
 
         }
-        if (isAllowed(Manifest.permission.ACCESS_FINE_LOCATION))
-            buildGoogleApiClient();
+
     }
 
     private boolean isAllowed(String permission) {
@@ -221,6 +220,8 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
      * Handles the Request Updates button and requests start of location updates.
      */
     public void requestLocationUpdates(View view) {
+        if (isAllowed(Manifest.permission.ACCESS_FINE_LOCATION))
+            buildGoogleApiClient();
         if (!LocationRequestHelper.getRequesting(this)) {
             try {
                 Log.i(TAG, "Starting location updates");
