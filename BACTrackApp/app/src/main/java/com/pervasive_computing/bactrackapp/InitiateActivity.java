@@ -40,7 +40,12 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackAPIKeyDeclined(String errorMessage) {
             Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
-            Toast.makeText(InitiateActivity.this, "Could not Connect", Toast.LENGTH_SHORT).show();
+            /*runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(InitiateActivity.this, "Please Restart App", Toast.LENGTH_LONG).show();
+                }
+            });*/
         }
 
         @Override
@@ -50,12 +55,14 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
-            Toast.makeText(InitiateActivity.this, "Connected", Toast.LENGTH_SHORT).show();
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    start_button = findViewById(R.id.start_button);
+                    loading_panel = findViewById(R.id.loadingPanel);
                     loading_panel.setVisibility(View.GONE);
                     start_button.setEnabled(true);
+                    //      Toast.makeText(InitiateActivity.this, "Connected", Toast.LENGTH_SHORT).show();
                 }
             });
             Log.wtf(TAG, "BACtrackConnected " + bacTrackDeviceType.toString());
@@ -63,13 +70,23 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackDidConnect(String s) {
-            Toast.makeText(InitiateActivity.this, "Connecting", Toast.LENGTH_SHORT).show();
+            /*runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(InitiateActivity.this, "Connecting", Toast.LENGTH_SHORT).show();
+                }
+            });*/
             Log.wtf(TAG, "BACtrackDidConnect " + s);
         }
 
         @Override
         public void BACtrackDisconnected() {
-            Toast.makeText(InitiateActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
+            /*runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(InitiateActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
+                }
+            });*/
             Log.wtf(TAG, "BACtrackDisconnected");
         }
 
@@ -80,6 +97,12 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackFoundBreathalyzer(BluetoothDevice bluetoothDevice) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setContentView(R.layout.start_process);
+                }
+            });
             Log.wtf(TAG, "Found breathalyzer : " + bluetoothDevice.getName());
         }
 
@@ -173,9 +196,7 @@ public class InitiateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_process);
-        start_button = findViewById(R.id.start_button);
-        loading_panel = findViewById(R.id.loadingPanel);
+        setContentView(R.layout.wait_screen);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //check if adaptor is available
         if (mBluetoothAdapter == null) {

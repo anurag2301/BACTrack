@@ -86,11 +86,11 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
                     REQUEST_PERMISSIONS_REQUEST_CODE);
 
         }
-        if(isAllowed(Manifest.permission.ACCESS_FINE_LOCATION))
+        if (isAllowed(Manifest.permission.ACCESS_FINE_LOCATION))
             buildGoogleApiClient();
     }
 
-    private boolean isAllowed(String permission){
+    private boolean isAllowed(String permission) {
         return ContextCompat.checkSelfPermission(getApplicationContext(), permission) == PackageManager.PERMISSION_GRANTED;
     }
 
