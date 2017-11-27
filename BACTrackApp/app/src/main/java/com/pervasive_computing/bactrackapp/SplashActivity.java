@@ -2,7 +2,6 @@ package com.pervasive_computing.bactrackapp;
 
 import android.Manifest;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -67,13 +66,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRequestUpdatesButton = findViewById(R.id.request_updates_button);
-
-        if (getSharedPreferences(MY_PREF, Context.MODE_PRIVATE).getBoolean(FIRST_RUN, true)) {
-            setContentView(R.layout.splash);
-        } else {
-            startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
-            finish();
-        }
+        setContentView(R.layout.splash);
         List<String> permissionsNeeded = new ArrayList<>();
         final List<String> permissionsList = new ArrayList<>();
         if (!addPermission(permissionsList, Manifest.permission.SEND_SMS))
@@ -129,10 +122,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     }
 
     public void get_started(View view) {
-        SharedPreferences sharedPreferences = getSharedPreferences(MY_PREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putBoolean(FIRST_RUN, false);
-        edit.apply();
         startActivity(new Intent(getApplicationContext(), WillYouDrink.class));
         finish();
     }
