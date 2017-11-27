@@ -6,6 +6,7 @@ package com.pervasive_computing.bactrackapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.TextView;
 
 public class GreenActivity extends BaseActivity {
@@ -14,8 +15,11 @@ public class GreenActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.green_screen);
         float bac_level = getIntent().getFloatExtra(getString(R.string.BAC_LEVEL), -1);
-        TextView textView = findViewById(R.id.textView5);
-        textView.setText(String.format("BAC: %s", bac_level));
-        startActivity(new Intent(getApplicationContext(), RedActivity.class));
+        TextView textView = findViewById(R.id.bac_level);
+        textView.setText(String.format("%s", bac_level));
+    }
+
+    public void try_again_clocked(View view) {
+        startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
     }
 }

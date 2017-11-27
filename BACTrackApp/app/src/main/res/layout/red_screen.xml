@@ -1,33 +1,68 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/red_background">
 
-    <ImageView
-        android:id="@+id/image_holiday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:alpha="1"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        android:paddingBottom="200dp"
-        android:paddingLeft="100dp"
-        android:paddingRight="100dp"
-        app:srcCompat="@mipmap/holiday" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <include
+        layout="@layout/six_imgs_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="126dp"
-        android:text="@string/HAVE_FUN"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="30sp" />
+        android:background="@color/white">
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded_button_black_border"
+            android:onClick="try_again_clocked"
+            android:text="Try Again" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:text="YOUR BAC LEVEL IS"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_small" />
+
+    <TextView
+        android:id="@+id/bac_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:text="@string/BAC_LEVEL"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_large" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bac_level"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:text="DO NOT DRIVE NOW.\nYou face serious legal consequences if you drive in your condition."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_medium" />
 
 </RelativeLayout>
