@@ -48,8 +48,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
      * delivered sooner than this interval.
      */
     private static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 3;
-    private static final String FIRST_RUN = "firstRun";
-    private static final String MY_PREF = "BACTrackPref";
     /**
      * Stores parameters for requests to the FusedLocationProviderApi.
      */

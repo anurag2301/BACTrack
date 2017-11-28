@@ -13,8 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,11 +36,13 @@ public class InitiateActivity extends BaseActivity {
     TextView wait_message;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BACtrackAPICallbacks";
+        private static final String RESTART_NEEDED = "RESTART_NEEDED";
+        private static final String INTERNET_NEEDED = "INTERNET_NEEDED";
 
         @Override
         public void BACtrackAPIKeyDeclined(String errorMessage) {
             Log.wtf(TAG, "BACtrackAPIKeyDeclined " + errorMessage);
-            final StringBuilder error = new StringBuilder();
+            /*final StringBuilder error = new StringBuilder();
             error.append("Please ");
             if (errorMessage.contains("connect to the Internet"))
                 error.append("connect to the Internet and ");
@@ -53,6 +53,11 @@ public class InitiateActivity extends BaseActivity {
                     wait_message.setText(error.toString());
                 }
             });
+            */
+            Intent i = new Intent(getApplicationContext(), RestartActivity.class);
+            i.putExtra(RESTART_NEEDED, true);
+            i.putExtra(INTERNET_NEEDED, true);
+            startActivity(i);
         }
 
         @Override
@@ -91,6 +96,9 @@ public class InitiateActivity extends BaseActivity {
                     Toast.makeText(InitiateActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
                 }
             });*/
+            Intent i = new Intent(getApplicationContext(), RestartActivity.class);
+            i.putExtra(RESTART_NEEDED, true);
+            startActivity(i);
             Log.wtf(TAG, "BACtrackDisconnected");
         }
 
@@ -193,10 +201,11 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackError(int errorCode) {
             Log.wtf(TAG, "BACtrackError " + errorCode);
+            Intent i = new Intent(getApplicationContext(), RestartActivity.class);
+            i.putExtra(RESTART_NEEDED, false);
+            startActivity(i);
         }
     };
-    private RelativeLayout loading_panel;
-    private Button start_button;
     private BACtrackAPI mAPI;
 
     public BACtrackAPI getAPIinstance(Context context) throws LocationServicesNotEnabledException, BluetoothLENotSupportedException, BluetoothNotEnabledException, IOException {
