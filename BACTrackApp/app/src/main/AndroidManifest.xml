@@ -45,6 +45,7 @@
         <activity android:name=".GreenActivity" />
         <activity android:name=".RedActivity" />
         <activity android:name=".YellowActivity" />
+        <activity android:name=".WaitActivity" />
 
         <service
             android:name=".LocationService"

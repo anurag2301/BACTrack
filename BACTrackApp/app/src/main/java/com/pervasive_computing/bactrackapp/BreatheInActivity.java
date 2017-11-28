@@ -53,13 +53,13 @@ public class BreatheInActivity extends BaseActivity {
                             progressBar.setProgress(progressStatus);
                             if (progressStatus + 10 >= MAX_PROGRESS) {
                                 done.setText(R.string.DONE);
-                                startActivity(new Intent(getApplicationContext(), BreatheOutActivity.class));
+                                startActivity(new Intent(getApplicationContext(), BlowActivity.class));
                             }
                         }
                     });
                     progressStatus += 10;
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(400);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

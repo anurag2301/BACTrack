@@ -31,10 +31,11 @@
 
     <TextView
         android:id="@+id/breatheBody"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:layout_above="@+id/progressBar"
-        android:layout_alignStart="@+id/breatheTitle"
+
         android:layout_marginBottom="32dp"
         android:text="TextView"
         android:textAlignment="center"
