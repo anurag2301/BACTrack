@@ -26,7 +26,7 @@ class NetworkUtilsLocation {
      * Default: results are sorted by best match if no field is specified.
      */
     private final static String PARAM_RADIUS = "radius";
-    private final static String RADIUS_VALUE = "15";
+    private final static String RADIUS_VALUE = "70";
     private final static String TYPE_VALUE = "bar";
     private final static String PARAM_TYPE = "type";
     private final static String PARAM_KEY = "key";
