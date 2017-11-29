@@ -33,8 +33,8 @@ public class BreatheInActivity extends BaseActivity {
 
     private void processThread() {
         final String titleTxt, bodyTxt;
-        titleTxt = "Breathe In";
-        bodyTxt = "Take a deep breath for\na few seconds.";
+        titleTxt = "Take Deep Breaths";
+        bodyTxt = "Continue breathing deeply for the next few seconds";
         progressStatus = 0;
         progressBar.setSecondaryProgress(MAX_PROGRESS);
         handler.post(new Runnable() {
