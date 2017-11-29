@@ -38,16 +38,16 @@
         <activity android:name=".WillYouDrink"
             android:parentActivityName=".SplashActivity">
         </activity>
-        <activity android:name=".HowGoingHome" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".InitiateActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".FirstPageActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".BreatheInActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".BreatheOutActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".BlowActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".GreenActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".RedActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".YellowActivity" android:parentActivityName=".SplashActivity"> </activity>
-        <activity android:name=".RestartActivity" android:parentActivityName=".SplashActivity"> </activity>
+        <activity android:name=".HowGoingHome"/>
+        <activity android:name=".InitiateActivity"/>
+        <activity android:name=".FirstPageActivity"/>
+        <activity android:name=".BreatheInActivity"/>
+        <activity android:name=".BreatheOutActivity"/>
+        <activity android:name=".BlowActivity"/>
+        <activity android:name=".GreenActivity"/>
+        <activity android:name=".RedActivity"/>
+        <activity android:name=".YellowActivity"/>
+        <activity android:name=".RestartActivity"/>
 
         <service
             android:name=".LocationService"

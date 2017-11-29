@@ -39,7 +39,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(this, SplashActivity.class);
+            startActivity(intent);
+            //super.onBackPressed();
         }
     }
 
@@ -132,4 +134,5 @@ public abstract class BaseActivity extends AppCompatActivity implements
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
