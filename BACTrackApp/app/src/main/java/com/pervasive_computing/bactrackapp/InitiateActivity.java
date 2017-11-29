@@ -155,7 +155,16 @@ public class InitiateActivity extends BaseActivity {
 
         @Override
         public void BACtrackResults(float measuredBac) {
+
             Log.wtf(TAG, "BACtrackResults " + measuredBac);
+
+            /*try {
+                mAPI.disconnect();
+                Log.wtf(TAG, "Disconnected");
+            } catch(Exception e) {
+                Log.e(TAG, "Tried Disconnecting");
+            }*/
+
             Intent i;
             if (measuredBac < 0.4) {
                 i = new Intent(getApplicationContext(), RedActivity.class);
@@ -258,6 +267,13 @@ public class InitiateActivity extends BaseActivity {
     }
 
     private void connectToNearestBreathalyzer() {
+        try {
+            mAPI.disconnect();
+            Log.wtf(TAG, "Disconnected");
+        } catch(Exception e) {
+            Log.e(TAG, "Tried Disconnecting");
+        }
+
         try {
             mAPI.connectToNearestBreathalyzer();
         } catch (Exception e) {
