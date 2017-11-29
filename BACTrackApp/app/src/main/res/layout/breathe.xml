@@ -27,19 +27,21 @@
         android:layout_marginBottom="21dp"
         android:text="Breathe"
         android:textAlignment="center"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_large" />
 
     <TextView
         android:id="@+id/breatheBody"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
-        android:layout_above="@+id/progressBar"
 
+        android:layout_above="@+id/progressBar"
         android:layout_marginBottom="32dp"
+
         android:text="TextView"
         android:textAlignment="center"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_medium" />
 
     <TextView
         android:id="@+id/breatheDone"

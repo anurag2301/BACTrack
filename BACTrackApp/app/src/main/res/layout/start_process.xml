@@ -1,7 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <include
+        layout="@layout/six_imgs_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/start_button"
@@ -12,90 +16,20 @@
         android:background="@drawable/circular_button"
         android:onClick="blow_clicked"
         android:text="@string/START"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_large" />
 
-    <ImageView
-        android:id="@+id/imageView_top_left"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_above="@+id/start_button"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="42dp"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_pint" />
-
-    <ImageView
-        android:id="@+id/imageView_bottom_left"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView_center_left"
-        android:layout_below="@+id/start_button"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_pint" />
-
-    <ImageView
-        android:id="@+id/imageView_top_right"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_above="@+id/start_button"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="42dp"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_glass" />
-
-    <ImageView
-        android:id="@+id/imageView_bottom_right"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView_center_right"
-        android:layout_below="@+id/start_button"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/smashicon_glass" />
-
-    <ImageView
-        android:id="@+id/imageView_center_left"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView_top_left"
-        android:layout_alignTop="@+id/imageView_center_right"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/cheers" />
-
-    <ImageView
-        android:id="@+id/imageView_center_right"
-        android:layout_width="@dimen/small_background_img_size"
-        android:layout_height="@dimen/small_background_img_size"
-        android:layout_alignStart="@+id/imageView_top_right"
-        android:layout_centerVertical="true"
-        android:alpha="0.14"
-        android:contentDescription="@string/BACKGROUND_IMAGE"
-        app:srcCompat="@mipmap/holiday" />
 
     <TextView
         android:id="@+id/main_screen_textView"
         android:layout_width="@dimen/start_button_diameter"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView_bottom_left"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/start_button"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="22dp"
         android:text="@string/START_PROCESS_MESSAGE"
         android:textAlignment="center"
-        android:textColor="@android:color/white" />
-    <!--
-        <RelativeLayout
-            android:id="@+id/loadingPanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_medium" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true" />
-        </RelativeLayout>-->
 </RelativeLayout>

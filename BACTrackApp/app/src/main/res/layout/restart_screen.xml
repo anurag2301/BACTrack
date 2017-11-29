@@ -29,7 +29,8 @@
         android:layout_marginTop="58dp"
         android:text="Retry BAC Test"
         android:textAlignment="center"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_medium" />
 
     <ImageView
         android:id="@+id/device_image"

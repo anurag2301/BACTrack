@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/contact_list_default_message"
         android:textAlignment="center"
+        android:textSize="@dimen/text_medium"
         android:visibility="visible" />
 
 </RelativeLayout>
