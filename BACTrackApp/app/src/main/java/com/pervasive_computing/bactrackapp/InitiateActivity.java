@@ -35,7 +35,7 @@ public class InitiateActivity extends BaseActivity {
     private static final String TAG = "InitiateActivity";
     private static final String RESTART_NEEDED = "RESTART_NEEDED";
     private static final String INTERNET_NEEDED = "INTERNET_NEEDED";
-    private static boolean restartCondition = true;
+    static boolean restartCondition = true;
     TextView wait_message;
     private BACtrackAPI mAPI;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
@@ -111,6 +111,7 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackConnectionTimeout() {
             Log.wtf(TAG, "BACtrackConnectionTimeout");
+            mAPI.disconnect();
         }
 
         @Override
@@ -163,16 +164,7 @@ public class InitiateActivity extends BaseActivity {
         public void BACtrackResults(float measuredBac) {
 
             Log.wtf(TAG, "BACtrackResults " + measuredBac);
-            restartCondition = false;
-            try {
-                mAPI.disconnect();
-                Log.wtf(TAG, "Disconnected");
-            } catch (Exception e) {
-                Log.e(TAG, "Tried Disconnecting");
-                restartCondition = true;
-            }
-
-
+            disconnect();
             Intent i;
             if (measuredBac < 0.4) {
                 i = new Intent(getApplicationContext(), RedActivity.class);
@@ -218,12 +210,7 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackError(int errorCode) {
             Log.wtf(TAG, "BACtrackError " + errorCode);
-            restartCondition = false;
-            try {
-                mAPI.disconnect();
-            } catch (Exception e) {
-                restartCondition = true;
-            }
+            disconnect();
             Intent i = new Intent(getApplicationContext(), RestartActivity.class);
             i.putExtra(RESTART_NEEDED, false);
             startActivity(i);
@@ -234,6 +221,7 @@ public class InitiateActivity extends BaseActivity {
         if (mAPI == null) {
             mAPI = new BACtrackAPI(context, mCallbacks, Util.getProperty("BACTRACK_API_KEY", context));
         }
+        ((GlobalProperties) getApplicationContext()).mAPI = mAPI;
         return mAPI;
     }
 
@@ -309,6 +297,17 @@ public class InitiateActivity extends BaseActivity {
             mAPI.connectToNearestBreathalyzer();
         } catch (Exception e) {
             Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void disconnect(){
+        restartCondition = false;
+        try {
+            mAPI.disconnect();
+            Log.wtf(TAG, "Disconnected");
+        } catch (Exception e) {
+            Log.e(TAG, "Tried Disconnecting");
+            restartCondition = true;
         }
     }
 

@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 
 public abstract class BaseActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "BaseActivity";
 
     @Override
     public void setContentView(int layoutResID) {
@@ -37,9 +40,24 @@ public abstract class BaseActivity extends AppCompatActivity implements
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            disconnect();
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
             //super.onBackPressed();
+        }
+    }
+
+    private void disconnect() {
+        try {
+            InitiateActivity.restartCondition = false;
+            ((GlobalProperties) getApplicationContext()).mAPI.disconnect();
+            Log.wtf(TAG, "Disconnected");
+        } catch (Exception e) {
+            try {
+                InitiateActivity.restartCondition = true;
+            } catch (Exception ignored) {
+            }
+            Log.e(TAG, "Tried Disconnecting");
         }
     }
 
@@ -105,6 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
                 return true;
             case R.id.back_to_main:
                 //startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+                disconnect();
                 startActivity(new Intent(getApplicationContext(), SplashActivity.class));
                 return true;
             default:

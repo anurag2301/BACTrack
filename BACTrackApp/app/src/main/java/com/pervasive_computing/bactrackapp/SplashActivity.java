@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +33,9 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         GoogleApiClient.OnConnectionFailedListener,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
+
+    private static final int TIME_DELAY = 2000;
+    private static long back_pressed;
     private static final String TAG = SplashActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 35;
     /**
@@ -156,6 +160,18 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
                 .addApi(LocationServices.API)
                 .build();
         createLocationRequest();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + TIME_DELAY > System.currentTimeMillis()) {
+            finish();
+            System.exit(0);
+        } else {
+            Toast.makeText(getBaseContext(), "Press once again to exit!",
+                    Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
     }
 
     @Override
