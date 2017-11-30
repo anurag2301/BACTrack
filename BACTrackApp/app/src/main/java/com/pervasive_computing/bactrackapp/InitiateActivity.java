@@ -37,6 +37,7 @@ public class InitiateActivity extends BaseActivity {
     private static final String INTERNET_NEEDED = "INTERNET_NEEDED";
     private static boolean restartCondition = true;
     TextView wait_message;
+    private BACtrackAPI mAPI;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BACtrackAPICallbacks";
 
@@ -65,7 +66,6 @@ public class InitiateActivity extends BaseActivity {
         public void BACtrackAPIKeyAuthorized() {
             Log.wtf(TAG, "BACtrackAPIKeyAuthorized");
         }
-
 
 
         @Override
@@ -99,7 +99,7 @@ public class InitiateActivity extends BaseActivity {
                     Toast.makeText(InitiateActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
                 }
             });*/
-            if(restartCondition) {
+            if (restartCondition) {
                 Intent i = new Intent(getApplicationContext(), RestartActivity.class);
                 i.putExtra(RESTART_NEEDED, true);
                 startActivity(i);
@@ -167,7 +167,7 @@ public class InitiateActivity extends BaseActivity {
             try {
                 mAPI.disconnect();
                 Log.wtf(TAG, "Disconnected");
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Log.e(TAG, "Tried Disconnecting");
                 restartCondition = true;
             }
@@ -229,7 +229,6 @@ public class InitiateActivity extends BaseActivity {
             startActivity(i);
         }
     };
-    private BACtrackAPI mAPI;
 
     public BACtrackAPI getAPIinstance(Context context) throws LocationServicesNotEnabledException, BluetoothLENotSupportedException, BluetoothNotEnabledException, IOException {
         if (mAPI == null) {
@@ -336,13 +335,12 @@ public class InitiateActivity extends BaseActivity {
             result = mAPI.startCountdown();
         }
         if (!result) {
-            Intent intent = new Intent(getApplicationContext(),RestartActivity.class);
+            Intent intent = new Intent(getApplicationContext(), RestartActivity.class);
             intent.putExtra(RESTART_NEEDED, true);
             startActivity(intent);
 
             Log.wtf(TAG, "mAPI.startCountdown() failed");
-        }
-        else {
+        } else {
             startActivity(new Intent(getApplicationContext(), BreatheInActivity.class));
             Log.wtf(TAG, "Blow process start requested");
         }

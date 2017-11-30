@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.Properties;
 
 class Util {
@@ -17,12 +16,13 @@ class Util {
     static String getProperty(String key, Context context) {
         Properties properties = new Properties();
         AssetManager assetManager = context.getAssets();
+        String result = "";
         try {
             properties.load(assetManager.open("config.properties"));
-        } catch (IOException e) {
+            result = properties.getProperty(key);
+        } catch (Exception e) {
             Log.e(TAG, "Error reading config");
-            e.printStackTrace();
         }
-        return properties.getProperty(key);
+        return result;
     }
 }

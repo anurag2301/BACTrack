@@ -12,14 +12,14 @@ import android.widget.TextView;
 public class RestartActivity extends BaseActivity {
     private static final String RESTART_NEEDED = "RESTART_NEEDED";
     private static final String INTERNET_NEEDED = "INTERNET_NEEDED";
-    private static boolean restartNeeded, internetNeeded;
+    private static boolean restartNeeded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restart_screen);
         restartNeeded = getIntent().getBooleanExtra(RESTART_NEEDED, true);
-        internetNeeded = getIntent().getBooleanExtra(INTERNET_NEEDED, false);
+        boolean internetNeeded = getIntent().getBooleanExtra(INTERNET_NEEDED, false);
         Button restart = findViewById(R.id.retry_btn);
         TextView body = findViewById(R.id.retry_message);
         TextView title = findViewById(R.id.retry_title);

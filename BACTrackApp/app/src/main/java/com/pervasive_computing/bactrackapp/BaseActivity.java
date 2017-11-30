@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 /*
   Created by Pratik on 11/05/2017.
@@ -78,19 +76,6 @@ public abstract class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    public void showFloatingActionButton() {
-        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
-        floatingActionButton.setVisibility(View.VISIBLE);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ContactPicker.class));
-                finish();
-            }
-        });
-
     }
 
     @Override
