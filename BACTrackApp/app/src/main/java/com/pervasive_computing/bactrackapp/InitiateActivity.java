@@ -33,12 +33,12 @@ public class InitiateActivity extends BaseActivity {
     private final static String KEY_LOCATION_UPDATES_RESULT = "location-update-result";
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
+    private static final String RESTART_NEEDED = "RESTART_NEEDED";
+    private static final String INTERNET_NEEDED = "INTERNET_NEEDED";
     private static boolean restartCondition = true;
     TextView wait_message;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BACtrackAPICallbacks";
-        private static final String RESTART_NEEDED = "RESTART_NEEDED";
-        private static final String INTERNET_NEEDED = "INTERNET_NEEDED";
 
         @Override
         public void BACtrackAPIKeyDeclined(String errorMessage) {
@@ -65,6 +65,8 @@ public class InitiateActivity extends BaseActivity {
         public void BACtrackAPIKeyAuthorized() {
             Log.wtf(TAG, "BACtrackAPIKeyAuthorized");
         }
+
+
 
         @Override
         public void BACtrackConnected(BACTrackDeviceType bacTrackDeviceType) {
@@ -216,6 +218,12 @@ public class InitiateActivity extends BaseActivity {
         @Override
         public void BACtrackError(int errorCode) {
             Log.wtf(TAG, "BACtrackError " + errorCode);
+            restartCondition = false;
+            try {
+                mAPI.disconnect();
+            } catch (Exception e) {
+                restartCondition = true;
+            }
             Intent i = new Intent(getApplicationContext(), RestartActivity.class);
             i.putExtra(RESTART_NEEDED, false);
             startActivity(i);
@@ -233,6 +241,19 @@ public class InitiateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*restartCondition = false;
+        try {
+            mAPI.disconnect();
+            Log.wtf(TAG, "Disconnected");
+        } catch(Exception e) {
+            restartCondition = true;
+            Log.e(TAG, "Tried Disconnecting");
+        }*/
         setContentView(R.layout.wait_screen);
         wait_message = findViewById(R.id.wait_message);
         wait_message.setText("Trying to connect to BACTrack device\nPlease check if the device is switched on.");
@@ -267,22 +288,25 @@ public class InitiateActivity extends BaseActivity {
                 /*
                   Permission already granted, start scan.
                  */
+
+            Log.wtf(TAG, "Trying to connect now");
             connectToNearestBreathalyzer();
         }
 
     }
 
     private void connectToNearestBreathalyzer() {
-        restartCondition = false;
+        /*restartCondition = false;
         try {
             mAPI.disconnect();
             Log.wtf(TAG, "Disconnected");
         } catch(Exception e) {
             restartCondition = true;
             Log.e(TAG, "Tried Disconnecting");
-        }
+        }*/
 
         try {
+            Log.wtf(TAG, "In func:Trying to connect");
             mAPI.connectToNearestBreathalyzer();
         } catch (Exception e) {
             Toast.makeText(InitiateActivity.this, "Please make sure that the device is switched on!", Toast.LENGTH_SHORT).show();
@@ -311,10 +335,16 @@ public class InitiateActivity extends BaseActivity {
         if (mAPI != null) {
             result = mAPI.startCountdown();
         }
-        if (!result)
+        if (!result) {
+            Intent intent = new Intent(getApplicationContext(),RestartActivity.class);
+            intent.putExtra(RESTART_NEEDED, true);
+            startActivity(intent);
+
             Log.wtf(TAG, "mAPI.startCountdown() failed");
-        else
+        }
+        else {
+            startActivity(new Intent(getApplicationContext(), BreatheInActivity.class));
             Log.wtf(TAG, "Blow process start requested");
-        startActivity(new Intent(getApplicationContext(), BreatheInActivity.class));
+        }
     }
 }

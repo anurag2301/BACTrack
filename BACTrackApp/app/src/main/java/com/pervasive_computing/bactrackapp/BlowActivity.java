@@ -3,6 +3,7 @@ package com.pervasive_computing.bactrackapp;
   Created by Pratik on 11/13/2017.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 
 public class BlowActivity extends BaseActivity {
@@ -11,6 +12,7 @@ public class BlowActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blow);
+
     }
 
 }
