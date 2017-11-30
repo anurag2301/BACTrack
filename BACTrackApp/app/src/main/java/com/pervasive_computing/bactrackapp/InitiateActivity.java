@@ -60,6 +60,7 @@ public class InitiateActivity extends BaseActivity {
             i.putExtra(RESTART_NEEDED, true);
             i.putExtra(INTERNET_NEEDED, true);
             startActivity(i);
+            finish();
         }
 
         @Override
@@ -85,6 +86,7 @@ public class InitiateActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    setContentView(R.layout.wait_screen);
                     wait_message.setText(getString(R.string.TEXT_CONNECTING));
                 }
             });
@@ -106,6 +108,7 @@ public class InitiateActivity extends BaseActivity {
                 Log.wtf(TAG, "BACtrackDisconnected");
             }
             restartCondition = true;
+            finish();
         }
 
         @Override
@@ -153,8 +156,9 @@ public class InitiateActivity extends BaseActivity {
                 @Override
                 public void run() {
                     Toast.makeText(InitiateActivity.this, "Analyzing results", Toast.LENGTH_LONG).show();
+                    setContentView(R.layout.wait_screen);
                     wait_message.setText(getString(R.string.TEXT_ANALYZING));
-                    // setContentView(R.layout.wait_screen);
+                    //
                 }
             });
             //startActivity(new Intent(getApplicationContext(), WaitActivity.class));
@@ -309,6 +313,7 @@ public class InitiateActivity extends BaseActivity {
             Log.e(TAG, "Tried Disconnecting");
             restartCondition = true;
         }
+        finish();
     }
 
     @Override

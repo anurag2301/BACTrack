@@ -37,7 +37,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
     private static final int TIME_DELAY = 2000;
     private static long back_pressed;
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 35;
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
@@ -69,35 +68,13 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         super.onCreate(savedInstanceState);
         mRequestUpdatesButton = findViewById(R.id.request_updates_button);
         setContentView(R.layout.splash);
-        List<String> permissionsNeeded = new ArrayList<>();
-        final List<String> permissionsList = new ArrayList<>();
-        if (!addPermission(permissionsList, Manifest.permission.SEND_SMS))
-            permissionsNeeded.add("android.permission.SEND_SMS");
-        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionsNeeded.add("android.permission.ACCESS_FINE_LOCATION");
-        if (permissionsList.size() > 0) {
-            ActivityCompat.requestPermissions(this,
-                    permissionsList.toArray(new String[permissionsList.size()]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-
-        }
-
+        askPermissions(0);
     }
 
-    private boolean isAllowed(String permission) {
-        return ContextCompat.checkSelfPermission(getApplicationContext(), permission) == PackageManager.PERMISSION_GRANTED;
-    }
 
-    private boolean addPermission(List<String> permissionsList, String permission) {
 
-        if (!isAllowed(permission)) {
-            permissionsList.add(permission);
-            // Check for Rationale Option
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permission))
-                return false;
-        }
-        return true;
-    }
+
+
 
 
     @Override
@@ -223,21 +200,24 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
      * Handles the Request Updates button and requests start of location updates.
      */
     public void requestLocationUpdates(View view) {
-        if (isAllowed(Manifest.permission.ACCESS_FINE_LOCATION))
+        if (isAllowed(Manifest.permission.ACCESS_FINE_LOCATION)) {
             buildGoogleApiClient();
-        if (!LocationRequestHelper.getRequesting(this)) {
-            try {
-                Log.i(TAG, "Starting location updates");
-                LocationRequestHelper.setRequesting(this, true);
-                LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, getPendingIntent());
-                //LocationServices.FusedLocationApi.requestLocationUpdates(
-                //        mGoogleApiClient, mLocationRequest, getPendingIntent());
-            } catch (SecurityException e) {
-                LocationRequestHelper.setRequesting(this, false);
-                e.printStackTrace();
+            if (!LocationRequestHelper.getRequesting(this)) {
+                try {
+                    Log.i(TAG, "Starting location updates");
+                    LocationRequestHelper.setRequesting(this, true);
+                    LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, getPendingIntent());
+                    //LocationServices.FusedLocationApi.requestLocationUpdates(
+                    //        mGoogleApiClient, mLocationRequest, getPendingIntent());
+                } catch (SecurityException e) {
+                    LocationRequestHelper.setRequesting(this, false);
+                    e.printStackTrace();
+                }
+            } else {
+                removeLocationUpdates(view);
             }
         } else {
-            removeLocationUpdates(view);
+            askPermissions(2);
         }
     }
 

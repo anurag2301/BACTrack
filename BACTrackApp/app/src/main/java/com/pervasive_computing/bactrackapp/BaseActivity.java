@@ -1,18 +1,25 @@
 package com.pervasive_computing.bactrackapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
   Created by Pratik on 11/05/2017.
@@ -22,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "BaseActivity";
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 35;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -129,6 +137,37 @@ public abstract class BaseActivity extends AppCompatActivity implements
             default:
                 return false;
         }
+    }
+
+    public void askPermissions(int i) {
+        List<String> permissionsNeeded = new ArrayList<>();
+        final List<String> permissionsList = new ArrayList<>();
+        if ((i == 1 || i == 0) && (!addPermission(permissionsList, Manifest.permission.SEND_SMS)))
+            permissionsNeeded.add("android.permission.SEND_SMS");
+        if ((i == 2 || i == 0) && (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION)))
+            permissionsNeeded.add("android.permission.ACCESS_FINE_LOCATION");
+        if (permissionsList.size() > 0) {
+            ActivityCompat.requestPermissions(this,
+                    permissionsList.toArray(new String[permissionsList.size()]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+
+    public boolean isAllowed(String permission) {
+        return ContextCompat.checkSelfPermission(getApplicationContext(), permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    private boolean addPermission(List<String> permissionsList, String permission) {
+
+        if (!isAllowed(permission)) {
+            permissionsList.add(permission);
+            // Check for Rationale Option
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission))
+                return false;
+        }
+        return true;
     }
 
     @Override

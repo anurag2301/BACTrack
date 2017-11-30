@@ -3,6 +3,7 @@ package com.pervasive_computing.bactrackapp;
   Created by Pratik on 11/15/2017.
  */
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +27,10 @@ public class RedActivity extends BaseActivity {
         float bac_level = getIntent().getFloatExtra(getString(R.string.BAC_LEVEL), -1);
         TextView textView = findViewById(R.id.bac_level);
         textView.setText(String.format("%s", bac_level));
-        sendSMS(bac_level);
+
+        if (isAllowed(Manifest.permission.SEND_SMS)) {
+            sendSMS(bac_level);
+        }
     }
 
     private void showMessage() {

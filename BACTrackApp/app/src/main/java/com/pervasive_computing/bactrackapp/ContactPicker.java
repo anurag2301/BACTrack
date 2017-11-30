@@ -1,5 +1,6 @@
 package com.pervasive_computing.bactrackapp;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,7 +24,12 @@ public class ContactPicker extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_list);
-        startContactIntent();
+        askPermissions(1);
+        if (isAllowed(Manifest.permission.SEND_SMS)) {
+            startContactIntent();
+        } else {
+            finish();
+        }
     }
 
     private void startContactIntent() {
