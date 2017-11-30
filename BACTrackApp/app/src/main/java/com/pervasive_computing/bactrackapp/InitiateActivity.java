@@ -33,6 +33,7 @@ public class InitiateActivity extends BaseActivity {
     private final static String KEY_LOCATION_UPDATES_RESULT = "location-update-result";
     private static final byte PERMISSIONS_FOR_SCAN = 100;
     private static final String TAG = "InitiateActivity";
+    private static boolean restartCondition = true;
     TextView wait_message;
     private final BACtrackAPICallbacks mCallbacks = new BACtrackAPICallbacks() {
         private static final String TAG = "BACtrackAPICallbacks";
@@ -96,10 +97,13 @@ public class InitiateActivity extends BaseActivity {
                     Toast.makeText(InitiateActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
                 }
             });*/
-            Intent i = new Intent(getApplicationContext(), RestartActivity.class);
-            i.putExtra(RESTART_NEEDED, true);
-            startActivity(i);
-            Log.wtf(TAG, "BACtrackDisconnected");
+            if(restartCondition) {
+                Intent i = new Intent(getApplicationContext(), RestartActivity.class);
+                i.putExtra(RESTART_NEEDED, true);
+                startActivity(i);
+                Log.wtf(TAG, "BACtrackDisconnected");
+            }
+            restartCondition = true;
         }
 
         @Override
@@ -157,13 +161,15 @@ public class InitiateActivity extends BaseActivity {
         public void BACtrackResults(float measuredBac) {
 
             Log.wtf(TAG, "BACtrackResults " + measuredBac);
-
-            /*try {
+            restartCondition = false;
+            try {
                 mAPI.disconnect();
                 Log.wtf(TAG, "Disconnected");
             } catch(Exception e) {
                 Log.e(TAG, "Tried Disconnecting");
-            }*/
+                restartCondition = true;
+            }
+
 
             Intent i;
             if (measuredBac < 0.4) {
@@ -267,10 +273,12 @@ public class InitiateActivity extends BaseActivity {
     }
 
     private void connectToNearestBreathalyzer() {
+        restartCondition = false;
         try {
             mAPI.disconnect();
             Log.wtf(TAG, "Disconnected");
         } catch(Exception e) {
+            restartCondition = true;
             Log.e(TAG, "Tried Disconnecting");
         }
 
