@@ -304,7 +304,7 @@ public class InitiateActivity extends BaseActivity {
         }
     }
 
-    private void disconnect(){
+    private void disconnect() {
         restartCondition = false;
         try {
             mAPI.disconnect();

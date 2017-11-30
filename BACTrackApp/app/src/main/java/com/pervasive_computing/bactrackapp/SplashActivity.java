@@ -4,14 +4,11 @@ import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +18,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
   Created by Pratik on 11/06/2017.
@@ -35,7 +29,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
 
 
     private static final int TIME_DELAY = 2000;
-    private static long back_pressed;
     private static final String TAG = SplashActivity.class.getSimpleName();
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -51,6 +44,7 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
      * delivered sooner than this interval.
      */
     private static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 3;
+    private static long back_pressed;
     /**
      * Stores parameters for requests to the FusedLocationProviderApi.
      */
@@ -70,11 +64,6 @@ public class SplashActivity extends BaseActivity implements GoogleApiClient.Conn
         setContentView(R.layout.splash);
         askPermissions(0);
     }
-
-
-
-
-
 
 
     @Override
